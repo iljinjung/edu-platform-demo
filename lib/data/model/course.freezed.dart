@@ -22,16 +22,24 @@ Course _$CourseFromJson(Map<String, dynamic> json) {
 mixin _$Course {
   int get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  @JsonKey(name: 'short_description')
   String get shortDescription => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image_file_url')
   String get imageFileUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'logo_file_url')
   String get logoFileUrl => throw _privateConstructorUsedError;
   List<String> get taglist => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_recommended')
   bool get isRecommended => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_free')
   bool get isFree => throw _privateConstructorUsedError;
   String? get price => throw _privateConstructorUsedError;
+  @JsonKey(name: 'discounted_price')
   String? get discountedPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: 'discount_rate')
   String? get discountRate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_favorite')
   bool get isFavorite => throw _privateConstructorUsedError;
 
   /// Serializes this Course to a JSON map.
@@ -51,17 +59,17 @@ abstract class $CourseCopyWith<$Res> {
   $Res call(
       {int id,
       String title,
-      String shortDescription,
+      @JsonKey(name: 'short_description') String shortDescription,
       String description,
-      String imageFileUrl,
-      String logoFileUrl,
+      @JsonKey(name: 'image_file_url') String imageFileUrl,
+      @JsonKey(name: 'logo_file_url') String logoFileUrl,
       List<String> taglist,
-      bool isRecommended,
-      bool isFree,
+      @JsonKey(name: 'is_recommended') bool isRecommended,
+      @JsonKey(name: 'is_free') bool isFree,
       String? price,
-      String? discountedPrice,
-      String? discountRate,
-      bool isFavorite});
+      @JsonKey(name: 'discounted_price') String? discountedPrice,
+      @JsonKey(name: 'discount_rate') String? discountRate,
+      @JsonKey(name: 'is_favorite') bool isFavorite});
 }
 
 /// @nodoc
@@ -160,17 +168,17 @@ abstract class _$$CourseImplCopyWith<$Res> implements $CourseCopyWith<$Res> {
   $Res call(
       {int id,
       String title,
-      String shortDescription,
+      @JsonKey(name: 'short_description') String shortDescription,
       String description,
-      String imageFileUrl,
-      String logoFileUrl,
+      @JsonKey(name: 'image_file_url') String imageFileUrl,
+      @JsonKey(name: 'logo_file_url') String logoFileUrl,
       List<String> taglist,
-      bool isRecommended,
-      bool isFree,
+      @JsonKey(name: 'is_recommended') bool isRecommended,
+      @JsonKey(name: 'is_free') bool isFree,
       String? price,
-      String? discountedPrice,
-      String? discountRate,
-      bool isFavorite});
+      @JsonKey(name: 'discounted_price') String? discountedPrice,
+      @JsonKey(name: 'discount_rate') String? discountRate,
+      @JsonKey(name: 'is_favorite') bool isFavorite});
 }
 
 /// @nodoc
@@ -263,17 +271,17 @@ class _$CourseImpl implements _Course {
   const _$CourseImpl(
       {required this.id,
       required this.title,
-      required this.shortDescription,
+      @JsonKey(name: 'short_description') required this.shortDescription,
       required this.description,
-      required this.imageFileUrl,
-      required this.logoFileUrl,
+      @JsonKey(name: 'image_file_url') required this.imageFileUrl,
+      @JsonKey(name: 'logo_file_url') required this.logoFileUrl,
       required final List<String> taglist,
-      this.isRecommended = false,
-      this.isFree = false,
+      @JsonKey(name: 'is_recommended') this.isRecommended = false,
+      @JsonKey(name: 'is_free') this.isFree = false,
       this.price,
-      this.discountedPrice,
-      this.discountRate,
-      this.isFavorite = false})
+      @JsonKey(name: 'discounted_price') this.discountedPrice,
+      @JsonKey(name: 'discount_rate') this.discountRate,
+      @JsonKey(name: 'is_favorite') this.isFavorite = false})
       : _taglist = taglist;
 
   factory _$CourseImpl.fromJson(Map<String, dynamic> json) =>
@@ -284,12 +292,15 @@ class _$CourseImpl implements _Course {
   @override
   final String title;
   @override
+  @JsonKey(name: 'short_description')
   final String shortDescription;
   @override
   final String description;
   @override
+  @JsonKey(name: 'image_file_url')
   final String imageFileUrl;
   @override
+  @JsonKey(name: 'logo_file_url')
   final String logoFileUrl;
   final List<String> _taglist;
   @override
@@ -300,19 +311,21 @@ class _$CourseImpl implements _Course {
   }
 
   @override
-  @JsonKey()
+  @JsonKey(name: 'is_recommended')
   final bool isRecommended;
   @override
-  @JsonKey()
+  @JsonKey(name: 'is_free')
   final bool isFree;
   @override
   final String? price;
   @override
+  @JsonKey(name: 'discounted_price')
   final String? discountedPrice;
   @override
+  @JsonKey(name: 'discount_rate')
   final String? discountRate;
   @override
-  @JsonKey()
+  @JsonKey(name: 'is_favorite')
   final bool isFavorite;
 
   @override
@@ -386,17 +399,18 @@ abstract class _Course implements Course {
   const factory _Course(
       {required final int id,
       required final String title,
+      @JsonKey(name: 'short_description')
       required final String shortDescription,
       required final String description,
-      required final String imageFileUrl,
-      required final String logoFileUrl,
+      @JsonKey(name: 'image_file_url') required final String imageFileUrl,
+      @JsonKey(name: 'logo_file_url') required final String logoFileUrl,
       required final List<String> taglist,
-      final bool isRecommended,
-      final bool isFree,
+      @JsonKey(name: 'is_recommended') final bool isRecommended,
+      @JsonKey(name: 'is_free') final bool isFree,
       final String? price,
-      final String? discountedPrice,
-      final String? discountRate,
-      final bool isFavorite}) = _$CourseImpl;
+      @JsonKey(name: 'discounted_price') final String? discountedPrice,
+      @JsonKey(name: 'discount_rate') final String? discountRate,
+      @JsonKey(name: 'is_favorite') final bool isFavorite}) = _$CourseImpl;
 
   factory _Course.fromJson(Map<String, dynamic> json) = _$CourseImpl.fromJson;
 
@@ -405,26 +419,34 @@ abstract class _Course implements Course {
   @override
   String get title;
   @override
+  @JsonKey(name: 'short_description')
   String get shortDescription;
   @override
   String get description;
   @override
+  @JsonKey(name: 'image_file_url')
   String get imageFileUrl;
   @override
+  @JsonKey(name: 'logo_file_url')
   String get logoFileUrl;
   @override
   List<String> get taglist;
   @override
+  @JsonKey(name: 'is_recommended')
   bool get isRecommended;
   @override
+  @JsonKey(name: 'is_free')
   bool get isFree;
   @override
   String? get price;
   @override
+  @JsonKey(name: 'discounted_price')
   String? get discountedPrice;
   @override
+  @JsonKey(name: 'discount_rate')
   String? get discountRate;
   @override
+  @JsonKey(name: 'is_favorite')
   bool get isFavorite;
 
   /// Create a copy of Course

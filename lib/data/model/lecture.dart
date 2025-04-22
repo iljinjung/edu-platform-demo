@@ -13,6 +13,7 @@ class Lecture with _$Lecture {
     @Default(0) int orderNo,
     @Default(true) bool isOpened,
     @Default(false) bool isPreview,
+    @JsonKey(name: 'is_free') @Default(false) bool isFree,
     @Default(0) int totalPageCount,
     @Default(0) int totalPagePoint,
     String? testDescription,

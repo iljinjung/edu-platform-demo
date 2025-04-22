@@ -27,6 +27,8 @@ mixin _$Lecture {
   int get orderNo => throw _privateConstructorUsedError;
   bool get isOpened => throw _privateConstructorUsedError;
   bool get isPreview => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_free')
+  bool get isFree => throw _privateConstructorUsedError;
   int get totalPageCount => throw _privateConstructorUsedError;
   int get totalPagePoint => throw _privateConstructorUsedError;
   String? get testDescription => throw _privateConstructorUsedError;
@@ -54,6 +56,7 @@ abstract class $LectureCopyWith<$Res> {
       int orderNo,
       bool isOpened,
       bool isPreview,
+      @JsonKey(name: 'is_free') bool isFree,
       int totalPageCount,
       int totalPagePoint,
       String? testDescription,
@@ -82,6 +85,7 @@ class _$LectureCopyWithImpl<$Res, $Val extends Lecture>
     Object? orderNo = null,
     Object? isOpened = null,
     Object? isPreview = null,
+    Object? isFree = null,
     Object? totalPageCount = null,
     Object? totalPagePoint = null,
     Object? testDescription = freezed,
@@ -115,6 +119,10 @@ class _$LectureCopyWithImpl<$Res, $Val extends Lecture>
       isPreview: null == isPreview
           ? _value.isPreview
           : isPreview // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFree: null == isFree
+          ? _value.isFree
+          : isFree // ignore: cast_nullable_to_non_nullable
               as bool,
       totalPageCount: null == totalPageCount
           ? _value.totalPageCount
@@ -151,6 +159,7 @@ abstract class _$$LectureImplCopyWith<$Res> implements $LectureCopyWith<$Res> {
       int orderNo,
       bool isOpened,
       bool isPreview,
+      @JsonKey(name: 'is_free') bool isFree,
       int totalPageCount,
       int totalPagePoint,
       String? testDescription,
@@ -177,6 +186,7 @@ class __$$LectureImplCopyWithImpl<$Res>
     Object? orderNo = null,
     Object? isOpened = null,
     Object? isPreview = null,
+    Object? isFree = null,
     Object? totalPageCount = null,
     Object? totalPagePoint = null,
     Object? testDescription = freezed,
@@ -211,6 +221,10 @@ class __$$LectureImplCopyWithImpl<$Res>
           ? _value.isPreview
           : isPreview // ignore: cast_nullable_to_non_nullable
               as bool,
+      isFree: null == isFree
+          ? _value.isFree
+          : isFree // ignore: cast_nullable_to_non_nullable
+              as bool,
       totalPageCount: null == totalPageCount
           ? _value.totalPageCount
           : totalPageCount // ignore: cast_nullable_to_non_nullable
@@ -242,6 +256,7 @@ class _$LectureImpl implements _Lecture {
       this.orderNo = 0,
       this.isOpened = true,
       this.isPreview = false,
+      @JsonKey(name: 'is_free') this.isFree = false,
       this.totalPageCount = 0,
       this.totalPagePoint = 0,
       this.testDescription,
@@ -268,6 +283,9 @@ class _$LectureImpl implements _Lecture {
   @JsonKey()
   final bool isPreview;
   @override
+  @JsonKey(name: 'is_free')
+  final bool isFree;
+  @override
   @JsonKey()
   final int totalPageCount;
   @override
@@ -280,7 +298,7 @@ class _$LectureImpl implements _Lecture {
 
   @override
   String toString() {
-    return 'Lecture(id: $id, title: $title, description: $description, lectureType: $lectureType, orderNo: $orderNo, isOpened: $isOpened, isPreview: $isPreview, totalPageCount: $totalPageCount, totalPagePoint: $totalPagePoint, testDescription: $testDescription, testScoreOpened: $testScoreOpened)';
+    return 'Lecture(id: $id, title: $title, description: $description, lectureType: $lectureType, orderNo: $orderNo, isOpened: $isOpened, isPreview: $isPreview, isFree: $isFree, totalPageCount: $totalPageCount, totalPagePoint: $totalPagePoint, testDescription: $testDescription, testScoreOpened: $testScoreOpened)';
   }
 
   @override
@@ -299,6 +317,7 @@ class _$LectureImpl implements _Lecture {
                 other.isOpened == isOpened) &&
             (identical(other.isPreview, isPreview) ||
                 other.isPreview == isPreview) &&
+            (identical(other.isFree, isFree) || other.isFree == isFree) &&
             (identical(other.totalPageCount, totalPageCount) ||
                 other.totalPageCount == totalPageCount) &&
             (identical(other.totalPagePoint, totalPagePoint) ||
@@ -320,6 +339,7 @@ class _$LectureImpl implements _Lecture {
       orderNo,
       isOpened,
       isPreview,
+      isFree,
       totalPageCount,
       totalPagePoint,
       testDescription,
@@ -350,6 +370,7 @@ abstract class _Lecture implements Lecture {
       final int orderNo,
       final bool isOpened,
       final bool isPreview,
+      @JsonKey(name: 'is_free') final bool isFree,
       final int totalPageCount,
       final int totalPagePoint,
       final String? testDescription,
@@ -371,6 +392,9 @@ abstract class _Lecture implements Lecture {
   bool get isOpened;
   @override
   bool get isPreview;
+  @override
+  @JsonKey(name: 'is_free')
+  bool get isFree;
   @override
   int get totalPageCount;
   @override
