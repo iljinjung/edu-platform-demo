@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:edu_platform_demo/app/routes/app_pages.dart';
 import 'package:edu_platform_demo/core/theme/app_theme.dart';
 import 'package:edu_platform_demo/di/bindings.dart';
 
-void main() {
+Future<void> main() async {
+  // Flutter 바인딩 초기화
   WidgetsFlutterBinding.ensureInitialized();
+
+  // SharedPreferences 초기화 및 주입
+  final prefs = await SharedPreferences.getInstance();
+  Get.put(prefs);
+
+  // 초기 바인딩 설정
   InitialBinding().dependencies();
+
   runApp(const MyApp());
 }
 
@@ -16,11 +25,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Edu Platform Demo',
+      title: 'Education Platform Demo',
       theme: AppTheme.lightTheme,
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
-      debugShowCheckedModeBanner: false,
+      initialBinding: InitialBinding(),
     );
   }
 }
