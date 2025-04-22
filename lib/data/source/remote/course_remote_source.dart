@@ -5,13 +5,13 @@ import '../../../core/constants/api_constants.dart';
 abstract class CourseRemoteSource {
   /// 강좌 목록을 조회합니다.
   ///
-  /// [offset]은 페이지네이션을 위한 시작 위치입니다. 기본값은 0입니다.
-  /// [count]는 한 번에 가져올 강좌 수입니다. 기본값은 [ApiConstants.defaultPageSize]입니다.
-  ///
-  /// 추가 필터링 옵션:
-  /// - filter_is_recommended=true: 추천 강좌만 조회
-  /// - filter_is_free=true: 무료 강좌만 조회
-  /// - filter_conditions={"course_ids":[...]}: 특정 강좌 ID 목록으로 필터링
+  /// [queryParameters]는 API 요청에 사용될 쿼리 파라미터입니다.
+  /// 지원되는 파라미터:
+  /// - offset: 페이지네이션을 위한 시작 위치 (기본값: 0)
+  /// - count: 한 번에 가져올 강좌 수 (기본값: [ApiConstants.defaultPageSize])
+  /// - filter_is_recommended: 추천 강좌만 조회 (true/false)
+  /// - filter_is_free: 무료 강좌만 조회 (true/false)
+  /// - filter_conditions: 특정 강좌 ID 목록으로 필터링 ({"course_ids":[...]})
   ///
   /// 응답 데이터 형식:
   /// ```json
@@ -40,8 +40,7 @@ abstract class CourseRemoteSource {
   /// }
   /// ```
   Future<Response<Map<String, dynamic>>> getCourseList({
-    int offset = 0,
-    int count = ApiConstants.defaultPageSize,
+    required Map<String, dynamic> queryParameters,
   });
 
   /// 특정 강좌의 상세 정보를 조회합니다.
@@ -93,15 +92,11 @@ class CourseRemoteSourceImpl implements CourseRemoteSource {
 
   @override
   Future<Response<Map<String, dynamic>>> getCourseList({
-    int offset = 0,
-    int count = ApiConstants.defaultPageSize,
+    required Map<String, dynamic> queryParameters,
   }) async {
     final response = await _dio.get<Map<String, dynamic>>(
       ApiConstants.courseList,
-      queryParameters: {
-        ApiConstants.offset: offset,
-        ApiConstants.count: count,
-      },
+      queryParameters: queryParameters,
     );
 
     return response;
