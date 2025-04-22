@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 class AppTextStyle {
+  static const title = TextStyle(
+    color: Colors.black,
+    fontSize: 28,
+    fontFamily: 'Noto Sans KR',
+    fontWeight: FontWeight.w700,
+  );
+
   static const sectionTitle = TextStyle(
     color: AppColors.black,
     fontSize: 16,
@@ -47,6 +54,13 @@ class AppTextStyle {
   static const actionButton = TextStyle(
     color: AppColors.white,
     fontSize: 16,
+    fontFamily: 'Noto Sans KR',
+    fontWeight: FontWeight.w700,
+  );
+
+  static const listTitle = TextStyle(
+    color: Colors.black,
+    fontSize: 18,
     fontFamily: 'Noto Sans KR',
     fontWeight: FontWeight.w700,
   );
