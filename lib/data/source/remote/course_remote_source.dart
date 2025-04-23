@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'dart:developer' as dev;
 
 import '../../../core/constants/api_constants.dart';
+import '../../../core/di/dio_provider.dart';
 
 abstract class CourseRemoteSource {
   /// 강좌 목록을 조회합니다.
@@ -94,25 +96,52 @@ class CourseRemoteSourceImpl implements CourseRemoteSource {
   Future<Response<Map<String, dynamic>>> getCourseList({
     required Map<String, dynamic> queryParameters,
   }) async {
-    final response = await _dio.get<Map<String, dynamic>>(
-      ApiConstants.courseList,
-      queryParameters: queryParameters,
-    );
+    try {
+      dev.log('CourseRemoteSource.getCourseList 호출 - 파라미터: $queryParameters');
 
-    return response;
+      final response = await _dio.get<Map<String, dynamic>>(
+        ApiConstants.courseList,
+        queryParameters: queryParameters,
+      );
+
+      // dev.log(
+      //     'CourseRemoteSource.getCourseList 응답 - 상태 코드: ${response.statusCode}');
+      // dev.log('CourseRemoteSource.getCourseList 응답 - 헤더: ${response.headers}');
+      // dev.log('CourseRemoteSource.getCourseList 응답 - 데이터: ${response.data}');
+
+      return response;
+    } catch (e, stackTrace) {
+      dev.log('CourseRemoteSource.getCourseList 에러 발생',
+          error: e, stackTrace: stackTrace);
+      rethrow;
+    }
   }
 
   @override
   Future<Response<Map<String, dynamic>>> getCourseDetail({
     required String courseId,
   }) async {
-    final response = await _dio.get<Map<String, dynamic>>(
-      ApiConstants.courseGet,
-      queryParameters: {
-        ApiConstants.courseId: courseId,
-      },
-    );
+    try {
+      dev.log('CourseRemoteSource.getCourseDetail 호출 - courseId: $courseId');
 
-    return response;
+      final response = await _dio.get<Map<String, dynamic>>(
+        ApiConstants.courseGet,
+        queryParameters: {
+          ApiConstants.courseId: courseId,
+        },
+      );
+
+      dev.log(
+          'CourseRemoteSource.getCourseDetail 응답 - 상태 코드: ${response.statusCode}');
+      dev.log(
+          'CourseRemoteSource.getCourseDetail 응답 - 헤더: ${response.headers}');
+      dev.log('CourseRemoteSource.getCourseDetail 응답 - 데이터: ${response.data}');
+
+      return response;
+    } catch (e, stackTrace) {
+      dev.log('CourseRemoteSource.getCourseDetail 에러 발생',
+          error: e, stackTrace: stackTrace);
+      rethrow;
+    }
   }
 }

@@ -69,65 +69,44 @@ class CourseCard extends StatelessWidget {
         hasImage ? imageFileUrl : (hasLogo ? logoFileUrl : null);
     final isLogoOnly = !hasImage && hasLogo;
 
-    // 테스트 환경에서는 이미지 로딩을 시도하지 않음
-    if (kIsWeb || !kDebugMode) {
-      return Container(
-        width: double.infinity,
-        height: 100,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: isLogoOnly
-              ? const Color(0xFF3A3A4C)
-              : (displayImageUrl == null ? AppColors.deepText : null),
-          borderRadius: BorderRadius.circular(10),
-          image: (displayImageUrl != null && !isLogoOnly)
-              ? DecorationImage(
-                  image: NetworkImage(displayImageUrl!),
-                  fit: BoxFit.cover,
-                )
-              : null,
-        ),
-        child: displayImageUrl == null
-            ? const Center(
-                child: Icon(
-                  Icons.image_not_supported,
-                  size: 40,
-                  color: Colors.white,
-                ),
-              )
-            : isLogoOnly
-                ? Center(
-                    child: Container(
-                      width: 56,
-                      height: 56,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(displayImageUrl!),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  )
-                : null,
-      );
-    }
-
-    // 테스트 환경에서는 기본 컨테이너 표시
     return Container(
       width: double.infinity,
       height: 100,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: AppColors.deepText,
+        color: isLogoOnly
+            ? const Color(0xFF3A3A4C)
+            : (displayImageUrl == null ? AppColors.deepText : null),
         borderRadius: BorderRadius.circular(10),
+        image: (displayImageUrl != null && !isLogoOnly)
+            ? DecorationImage(
+                image: NetworkImage(displayImageUrl),
+                fit: BoxFit.cover,
+              )
+            : null,
       ),
-      child: const Center(
-        child: Icon(
-          Icons.image_not_supported,
-          size: 40,
-          color: Colors.white,
-        ),
-      ),
+      child: displayImageUrl == null
+          ? const Center(
+              child: Icon(
+                Icons.image_not_supported,
+                size: 40,
+                color: Colors.white,
+              ),
+            )
+          : isLogoOnly
+              ? Center(
+                  child: Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(displayImageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                )
+              : null,
     );
   }
 

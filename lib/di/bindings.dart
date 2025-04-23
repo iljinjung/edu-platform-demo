@@ -11,13 +11,14 @@ import 'package:edu_platform_demo/presentation/view_model/detail/course_detail_v
 import 'package:edu_platform_demo/domain/repository/course_list_repository.dart';
 import 'package:edu_platform_demo/domain/repository/course_detail_repository.dart';
 import 'package:edu_platform_demo/domain/repository/enrollment_repository.dart';
+import 'package:edu_platform_demo/core/di/dio_provider.dart';
 
 /// 앱의 공통 의존성을 초기화하는 Binding
 class InitialBinding extends Bindings {
   @override
   void dependencies() {
     // Dio 설정 및 초기화
-    final dio = Dio();
+    final dio = DioProvider.dio;
     Get.put(dio);
 
     // Remote Sources 초기화 - 추상 타입으로 주입

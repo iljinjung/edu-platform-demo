@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:developer' as dev;
 
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -78,6 +79,19 @@ class HomeViewModel extends GetxController {
   void onInit() {
     super.onInit();
     _initPagingControllers();
+
+    _fetchCourses(
+      0,
+      CourseFilterType.free,
+      freePagingController,
+    );
+
+    _fetchCourses(
+      0,
+      CourseFilterType.recommended,
+      recommendedPagingController,
+    );
+
     _loadEnrolledCourses();
   }
 
@@ -124,8 +138,13 @@ class HomeViewModel extends GetxController {
     PagingController<int, Course> controller,
   ) async {
     try {
+      dev.log(
+          'HomeViewModel._fetchCourses 시작 - pageKey: $pageKey, filterType: $filterType');
+      dev.log('현재 컨트롤러 상태 - itemList: ${controller.itemList?.length ?? 0}개');
+
       // 네트워크 연결 확인
       if (!_isConnected.value) {
+        dev.log('HomeViewModel._fetchCourses - 네트워크 연결 없음');
         throw const SocketException('인터넷 연결을 확인해주세요.');
       }
 
@@ -135,21 +154,36 @@ class HomeViewModel extends GetxController {
         count: ApiConstants.defaultPageSize,
       );
 
+      dev.log('HomeViewModel._fetchCourses - 강좌 데이터 수신: ${courses.length}개');
+      if (courses.isNotEmpty) {
+        dev.log(
+            'HomeViewModel._fetchCourses - 첫 번째 강좌 데이터: ${courses.first.toJson()}');
+        dev.log(
+            'HomeViewModel._fetchCourses - 마지막 강좌 데이터: ${courses.last.toJson()}');
+      }
+
       final isLastPage = courses.length < ApiConstants.defaultPageSize;
       if (isLastPage) {
+        dev.log('HomeViewModel._fetchCourses - 마지막 페이지 도달');
         controller.appendLastPage(courses);
       } else {
+        dev.log(
+            'HomeViewModel._fetchCourses - 다음 페이지 있음, 다음 pageKey: ${pageKey + ApiConstants.defaultPageSize}');
         controller.appendPage(
           courses,
           pageKey + ApiConstants.defaultPageSize,
         );
       }
 
+      dev.log(
+          '컨트롤러 업데이트 후 상태 - itemList: ${controller.itemList?.length ?? 0}개');
+
       // 성공 시 에러 상태 초기화
       errorMessage.value = null;
       canRetry.value = false;
       _isConnected.value = true;
     } on SocketException catch (e) {
+      dev.log('HomeViewModel._fetchCourses - SocketException 발생', error: e);
       _handleError(
         controller: controller,
         message: '인터넷 연결을 확인해주세요.',
@@ -158,6 +192,7 @@ class HomeViewModel extends GetxController {
       );
       _isConnected.value = false;
     } on TimeoutException catch (e) {
+      dev.log('HomeViewModel._fetchCourses - TimeoutException 발생', error: e);
       _handleError(
         controller: controller,
         message: '서버 응답이 지연되고 있어요. 잠시 후 다시 시도해주세요.',
@@ -165,6 +200,7 @@ class HomeViewModel extends GetxController {
         canRetry: true,
       );
     } catch (error) {
+      dev.log('HomeViewModel._fetchCourses - 예상치 못한 에러 발생', error: error);
       _handleError(
         controller: controller,
         message: '강좌 목록을 불러오지 못했어요. 잠시 후 다시 시도해주세요.',
@@ -179,32 +215,49 @@ class HomeViewModel extends GetxController {
   /// 로딩 상태를 [isLoading]으로 표시
   Future<void> _loadEnrolledCourses() async {
     try {
+      dev.log('HomeViewModel._loadEnrolledCourses 시작');
       isLoading(true);
 
       if (!_isConnected.value) {
+        dev.log('HomeViewModel._loadEnrolledCourses - 네트워크 연결 없음');
         throw const SocketException('인터넷 연결을 확인해주세요.');
       }
 
       final courses = await courseListRepository.getEnrolledCourses();
+      dev.log(
+          'HomeViewModel._loadEnrolledCourses - 수강 중인 강좌 수: ${courses.length}');
+      if (courses.isNotEmpty) {
+        dev.log(
+            'HomeViewModel._loadEnrolledCourses - 첫 번째 강좌: ${courses.first.toJson()}');
+      }
+
       enrolledCourses.assignAll(courses);
       errorMessage.value = null;
       canRetry.value = false;
       _isConnected.value = true;
     } on SocketException catch (e) {
+      dev.log('HomeViewModel._loadEnrolledCourses - SocketException 발생',
+          error: e);
       errorMessage.value = '인터넷 연결을 확인해주세요.';
       _isConnected.value = false;
       print('Error loading enrolled courses: $e');
       canRetry.value = true;
     } on TimeoutException catch (e) {
+      dev.log('HomeViewModel._loadEnrolledCourses - TimeoutException 발생',
+          error: e);
       errorMessage.value = '서버 응답이 지연되고 있어요. 잠시 후 다시 시도해주세요.';
       print('Error loading enrolled courses: $e');
       canRetry.value = true;
     } catch (error) {
+      dev.log('HomeViewModel._loadEnrolledCourses - 예상치 못한 에러 발생',
+          error: error);
       errorMessage.value = '내 학습 강좌를 불러오지 못했어요.';
       print('Error loading enrolled courses: $error');
       canRetry.value = true;
     } finally {
       isLoading(false);
+      dev.log(
+          'HomeViewModel._loadEnrolledCourses 종료 - isLoading: ${isLoading.value}');
     }
   }
 
@@ -215,11 +268,13 @@ class HomeViewModel extends GetxController {
   /// - 수강 중인 강좌 목록
   /// - 네트워크 상태 초기화
   Future<void> refreshAll() async {
+    dev.log('HomeViewModel.refreshAll 시작');
     errorMessage.value = null;
     canRetry.value = false;
     recommendedPagingController.refresh();
     freePagingController.refresh();
     await _loadEnrolledCourses();
+    dev.log('HomeViewModel.refreshAll 종료');
   }
 
   /// 에러 처리를 위한 헬퍼 메서드
@@ -234,6 +289,11 @@ class HomeViewModel extends GetxController {
     required Object error,
     bool canRetry = false,
   }) {
+    dev.log('HomeViewModel._handleError',
+        error: error,
+        name: 'HomeViewModel',
+        stackTrace: error is Error ? error.stackTrace : null);
+
     controller.error = error;
     errorMessage.value = message;
     this.canRetry.value = canRetry;

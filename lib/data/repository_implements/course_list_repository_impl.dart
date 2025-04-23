@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer' as dev;
 
 import '../../core/constants/api_constants.dart';
 import '../../domain/model/course_filter_type.dart';
@@ -34,36 +35,57 @@ class CourseListRepositoryImpl implements CourseListRepository {
     int offset = 0,
     int count = ApiConstants.defaultPageSize,
   }) async {
-    /// 필터 타입과 기본 파라미터로 쿼리 객체 생성
-    final query = CourseListQuery.fromFilterType(
-      filterType: filterType,
-      offset: offset,
-      count: count,
-      enrolledCourseIds: filterType == CourseFilterType.enrolled
-          ? _preferences.getStringList('enrolled_course_ids')
-          : null,
-    );
+    try {
+      dev.log(
+          'fetchCourses 시작 - filterType: $filterType, offset: $offset, count: $count');
 
-    /// Remote Source를 통해 API 호출
-    final response = await _remoteSource.getCourseList(
-      queryParameters: query.toQuery(),
-    );
+      final enrolledIds = _preferences.getStringList('enrolled_course_ids');
+      dev.log('저장된 수강 강좌 ID 목록: $enrolledIds');
 
-    /// 응답 데이터가 없으면 빈 리스트 반환
-    final data = response.data;
-    if (data == null) return [];
+      final query = CourseListQuery.fromFilterType(
+        filterType: filterType,
+        offset: offset,
+        count: count,
+        enrolledCourseIds:
+            filterType == CourseFilterType.enrolled ? enrolledIds : null,
+      );
 
-    /// 응답 데이터를 Course 모델로 변환하여 반환
-    final courses = data['courses'] as List<dynamic>;
-    return courses
-        .map((json) => Course.fromJson(json as Map<String, dynamic>))
-        .toList();
+      dev.log('API 요청 파라미터: ${query.toQuery()}');
+
+      final response = await _remoteSource.getCourseList(
+        queryParameters: query.toQuery(),
+      );
+
+      // dev.log('API 응답 상태 코드: ${response.statusCode}');
+      // dev.log('API 응답 헤더: ${response.headers}');
+      // dev.log('API 응답 데이터: ${response.data}');
+
+      final data = response.data;
+      if (data == null) {
+        dev.log('응답 데이터가 null입니다.');
+        return [];
+      }
+
+      final courses = data['courses'] as List<dynamic>;
+      final result = courses
+          .map((json) => Course.fromJson(json as Map<String, dynamic>))
+          .toList();
+
+      dev.log('변환된 강좌 목록 개수: ${result.length}');
+      return result;
+    } catch (e, stackTrace) {
+      dev.log(
+        'fetchCourses 에러 발생',
+        error: e,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
   }
 
   @override
   Future<List<Course>> getEnrolledCourses() async {
-    /// enrolled 필터 타입으로 강좌 목록 조회
-    /// 내부적으로 수강 중인 강좌 ID 목록으로 필터링하여 조회
+    dev.log('getEnrolledCourses 호출');
     return fetchCourses(filterType: CourseFilterType.enrolled);
   }
 }
