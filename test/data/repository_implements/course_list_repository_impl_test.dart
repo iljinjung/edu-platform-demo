@@ -142,7 +142,7 @@ void main() {
       // then
       verify(mockRemoteSource.getCourseList(queryParameters: {
         'offset': 0,
-        'count': ApiConstants.defaultPageSize,
+        'count': 2,
         'filter_conditions': {
           'course_ids': ['18818', '21503']
         },
