@@ -175,13 +175,10 @@ class CourseDetailViewModel extends GetxController {
   Future<void> toggleEnrollment() async {
     if (course == null || _isEnrolling.value) return;
 
-    try {
-      _isEnrolling.value = true;
-      await enrollmentRepository.toggleEnrollment(course!.id);
-      await _checkEnrollmentStatus();
-    } finally {
-      _isEnrolling.value = false;
-    }
+    _isEnrolling.value = true;
+    await enrollmentRepository.toggleEnrollment(course!.id);
+    _isEnrolled.value = await enrollmentRepository.isEnrolled(course!.id);
+    _isEnrolling.value = false;
   }
 
   /// 에러 상태를 초기화합니다.

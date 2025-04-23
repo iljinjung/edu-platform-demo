@@ -23,7 +23,7 @@ class CourseDetailView extends GetView<CourseDetailViewModel> {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         surfaceTintColor: Colors.transparent,
         leading: IconButton(
           icon: SvgPicture.asset(

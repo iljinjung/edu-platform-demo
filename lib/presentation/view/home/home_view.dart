@@ -26,6 +26,7 @@ class HomeView extends GetWidget<HomeViewModel> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Row(
