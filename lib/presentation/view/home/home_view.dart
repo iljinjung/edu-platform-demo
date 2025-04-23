@@ -133,7 +133,8 @@ class HomeView extends GetView<HomeViewModel> {
                     }
 
                     if (controller.hasNoEnrolledCourses) {
-                      return const Padding(
+                      return Container(
+                        height: 150,
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         child: Center(child: Text('수강 중인 강좌가 없습니다.')),
                       );

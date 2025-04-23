@@ -88,7 +88,13 @@ class CourseListRepositoryImpl implements CourseListRepository {
 
   @override
   Future<List<Course>> getEnrolledCourses() async {
-    dev.log('getEnrolledCourses 호출');
-    return fetchCourses(filterType: CourseFilterType.enrolled);
+    final enrolledIds = _preferences.getStringList('enrolled_course_ids') ?? [];
+    if (enrolledIds.isEmpty) {
+      dev.log('수강 중인 강좌 ID 없음 → API 호출 생략');
+      return [];
+    }
+    return fetchCourses(
+      filterType: CourseFilterType.enrolled,
+    );
   }
 }
