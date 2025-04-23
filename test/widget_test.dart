@@ -7,24 +7,47 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:edu_platform_demo/di/bindings.dart';
+import 'package:edu_platform_demo/presentation/view/home/home_view.dart';
+import 'package:edu_platform_demo/presentation/components/button/app_button.dart';
+import 'package:edu_platform_demo/presentation/components/card/course_card.dart';
 
 import 'package:edu_platform_demo/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  setUpAll(() {
+    TestWidgetsFlutterBinding.ensureInitialized();
+  });
+
+  testWidgets('Home screen test', (WidgetTester tester) async {
+    // SharedPreferences 테스트 설정
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    Get.put<SharedPreferences>(prefs);
+
+    // 초기 바인딩 설정
+    InitialBinding().dependencies();
+
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
+    await tester.pumpAndSettle(const Duration(seconds: 1));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // HomeView가 표시되는지 확인
+    expect(find.byType(HomeView), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // 코스 카드가 표시되는지 확인
+    expect(find.byType(CourseCard), findsNWidgets(5));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // 강의 제목이 표시되는지 확인
+    expect(find.text('플러터로 시작하는 크로스플랫폼 앱 개발'), findsOneWidget);
+
+    // 수강 신청 버튼이 표시되는지 확인
+    expect(find.byType(AppButton), findsOneWidget);
+    expect(find.text('수강 신청'), findsOneWidget);
+
+    // 강의 목록의 첫 번째 강의가 표시되는지 확인
+    expect(find.text('Flutter 소개와 개발 환경 설정'), findsOneWidget);
   });
 }
