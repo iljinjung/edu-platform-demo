@@ -45,6 +45,8 @@ Widget buildDefaultCourseCard(BuildContext context) {
       logoFileUrl: logoUrl,
       imageFileUrl: imageUrl,
       taglist: [],
+      courseId: 1,
+      onTap: (_) {},
     ),
   );
 }
@@ -85,6 +87,8 @@ Widget buildCourseCardWithLogoOnly(BuildContext context) {
       logoFileUrl: logoUrl,
       imageFileUrl: null,
       taglist: [],
+      courseId: 1,
+      onTap: (_) {},
     ),
   );
 }
@@ -119,6 +123,8 @@ Widget buildCourseCardWithoutImages(BuildContext context) {
       logoFileUrl: null,
       imageFileUrl: null,
       taglist: [],
+      courseId: 1,
+      onTap: (_) {},
     ),
   );
 }

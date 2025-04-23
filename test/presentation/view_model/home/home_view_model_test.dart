@@ -25,6 +25,9 @@ void main() {
       imageFileUrl: 'image1.jpg',
       logoFileUrl: 'logo1.jpg',
       taglist: ['tag1'],
+      isRecommended: true,
+      isFree: true,
+      isFavorite: true,
     ),
     Course(
       id: 2,
@@ -34,6 +37,9 @@ void main() {
       imageFileUrl: 'image2.jpg',
       logoFileUrl: 'logo2.jpg',
       taglist: ['tag2'],
+      isRecommended: true,
+      isFree: true,
+      isFavorite: true,
     ),
   ];
 

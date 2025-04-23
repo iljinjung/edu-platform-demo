@@ -8,15 +8,25 @@ import 'package:edu_platform_demo/core/theme/app_colors.dart';
 import 'package:edu_platform_demo/core/theme/app_text_style.dart';
 import 'package:edu_platform_demo/presentation/components/card/course_card.dart';
 import 'package:edu_platform_demo/presentation/view_model/home/home_view_model.dart';
+import 'package:edu_platform_demo/app/routes/app_pages.dart';
 
-class HomeView extends GetView<HomeViewModel> {
+class HomeView extends GetWidget<HomeViewModel> {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // onReady 구현
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final result = Get.arguments;
+      if (result == true) {
+        controller.refreshEnrolledCourses();
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Row(
@@ -75,6 +85,11 @@ class HomeView extends GetView<HomeViewModel> {
                             title: course.title,
                             shortDescription: course.shortDescription,
                             taglist: course.taglist,
+                            courseId: course.id,
+                            onTap: (courseId) => Get.toNamed(
+                              Routes.courseDetail,
+                              arguments: {'courseId': courseId},
+                            ),
                           ),
                         ),
                         noItemsFoundIndicatorBuilder: (_) =>
@@ -107,6 +122,16 @@ class HomeView extends GetView<HomeViewModel> {
                             title: course.title,
                             shortDescription: course.shortDescription,
                             taglist: course.taglist,
+                            courseId: course.id,
+                            onTap: (courseId) async {
+                              final result = await Get.toNamed(
+                                Routes.courseDetail,
+                                arguments: {'courseId': courseId},
+                              );
+                              if (result == true) {
+                                controller.refreshEnrolledCourses();
+                              }
+                            },
                           ),
                         ),
                         noItemsFoundIndicatorBuilder: (_) =>
@@ -156,6 +181,16 @@ class HomeView extends GetView<HomeViewModel> {
                             title: course.title,
                             shortDescription: course.shortDescription,
                             taglist: course.taglist,
+                            courseId: course.id,
+                            onTap: (courseId) async {
+                              final result = await Get.toNamed(
+                                Routes.courseDetail,
+                                arguments: {'courseId': courseId},
+                              );
+                              if (result == true) {
+                                controller.refreshEnrolledCourses();
+                              }
+                            },
                           );
                         },
                       ),

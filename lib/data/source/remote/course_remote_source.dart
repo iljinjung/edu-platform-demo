@@ -131,10 +131,10 @@ class CourseRemoteSourceImpl implements CourseRemoteSource {
         },
       );
 
-      dev.log(
-          'CourseRemoteSource.getCourseDetail 응답 - 상태 코드: ${response.statusCode}');
-      dev.log(
-          'CourseRemoteSource.getCourseDetail 응답 - 헤더: ${response.headers}');
+      // dev.log(
+      //     'CourseRemoteSource.getCourseDetail 응답 - 상태 코드: ${response.statusCode}');
+      // dev.log(
+      //     'CourseRemoteSource.getCourseDetail 응답 - 헤더: ${response.headers}');
       dev.log('CourseRemoteSource.getCourseDetail 응답 - 데이터: ${response.data}');
 
       return response;

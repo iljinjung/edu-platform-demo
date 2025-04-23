@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../core/constants/api_constants.dart';
 import '../../../data/model/course.dart';
@@ -156,10 +157,10 @@ class HomeViewModel extends GetxController {
 
       dev.log('HomeViewModel._fetchCourses - 강좌 데이터 수신: ${courses.length}개');
       if (courses.isNotEmpty) {
-        dev.log(
-            'HomeViewModel._fetchCourses - 첫 번째 강좌 데이터: ${courses.first.toJson()}');
-        dev.log(
-            'HomeViewModel._fetchCourses - 마지막 강좌 데이터: ${courses.last.toJson()}');
+        // dev.log(
+        //     'HomeViewModel._fetchCourses - 첫 번째 강좌 데이터: ${courses.first.toJson()}');
+        // dev.log(
+        //     'HomeViewModel._fetchCourses - 마지막 강좌 데이터: ${courses.last.toJson()}');
       }
 
       final isLastPage = courses.length < ApiConstants.defaultPageSize;
@@ -167,8 +168,8 @@ class HomeViewModel extends GetxController {
         dev.log('HomeViewModel._fetchCourses - 마지막 페이지 도달');
         controller.appendLastPage(courses);
       } else {
-        dev.log(
-            'HomeViewModel._fetchCourses - 다음 페이지 있음, 다음 pageKey: ${pageKey + ApiConstants.defaultPageSize}');
+        // dev.log(
+        //     'HomeViewModel._fetchCourses - 다음 페이지 있음, 다음 pageKey: ${pageKey + ApiConstants.defaultPageSize}');
         controller.appendPage(
           courses,
           pageKey + ApiConstants.defaultPageSize,
@@ -224,14 +225,13 @@ class HomeViewModel extends GetxController {
       }
 
       final courses = await courseListRepository.getEnrolledCourses();
-      dev.log(
-          'HomeViewModel._loadEnrolledCourses - 수강 중인 강좌 수: ${courses.length}');
-      if (courses.isNotEmpty) {
-        dev.log(
-            'HomeViewModel._loadEnrolledCourses - 첫 번째 강좌: ${courses.first.toJson()}');
+      debugPrint('코스 아이디: 수강 중인 강좌 목록 요청 완료 - 총 ${courses.length}개');
+      for (var course in courses) {
+        debugPrint('코스 아이디: 수강 중인 강좌 - courseId: ${course.id}');
       }
 
       enrolledCourses.assignAll(courses);
+      debugPrint('코스 아이디: 수강 중인 강좌 목록 업데이트 완료');
       errorMessage.value = null;
       canRetry.value = false;
       _isConnected.value = true;
@@ -298,5 +298,12 @@ class HomeViewModel extends GetxController {
     errorMessage.value = message;
     this.canRetry.value = canRetry;
     print('Error fetching courses: $error');
+  }
+
+  /// 수강 중인 강좌 목록을 새로고침합니다.
+  Future<void> refreshEnrolledCourses() async {
+    debugPrint('코스 아이디: 수강 중인 강좌 목록 새로고침 시작');
+    await _loadEnrolledCourses();
+    debugPrint('코스 아이디: 수강 중인 강좌 목록 새로고침 완료');
   }
 }
