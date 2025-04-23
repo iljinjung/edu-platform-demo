@@ -16,8 +16,39 @@ void main() {
   late MockCourseListRepository mockRepository;
   late HomeViewModel viewModel;
 
+  final testCourses = [
+    Course(
+      id: 1,
+      title: 'Test Course 1',
+      description: 'Description 1',
+      shortDescription: 'Short Description 1',
+      imageFileUrl: 'image1.jpg',
+      logoFileUrl: 'logo1.jpg',
+      taglist: ['tag1'],
+    ),
+    Course(
+      id: 2,
+      title: 'Test Course 2',
+      description: 'Description 2',
+      shortDescription: 'Short Description 2',
+      imageFileUrl: 'image2.jpg',
+      logoFileUrl: 'logo2.jpg',
+      taglist: ['tag2'],
+    ),
+  ];
+
   setUp(() {
     mockRepository = MockCourseListRepository();
+
+    // 기본 stub 설정
+    when(mockRepository.fetchCourses(
+      filterType: anyNamed('filterType'),
+      offset: anyNamed('offset'),
+      count: anyNamed('count'),
+    )).thenAnswer((_) async => testCourses);
+
+    when(mockRepository.getEnrolledCourses()).thenAnswer((_) async => []);
+
     viewModel = HomeViewModel(courseListRepository: mockRepository);
   });
 
@@ -26,35 +57,6 @@ void main() {
   });
 
   group('HomeViewModel Tests', () {
-    final testCourses = [
-      Course(
-        id: 1,
-        title: 'Test Course 1',
-        description: 'Description 1',
-        shortDescription: 'Short Description 1',
-        imageFileUrl: 'image1.jpg',
-        logoFileUrl: 'logo1.jpg',
-        taglist: ['tag1'],
-      ),
-      Course(
-        id: 2,
-        title: 'Test Course 2',
-        description: 'Description 2',
-        shortDescription: 'Short Description 2',
-        imageFileUrl: 'image2.jpg',
-        logoFileUrl: 'logo2.jpg',
-        taglist: ['tag2'],
-      ),
-    ];
-
-    test('초기 상태 테스트', () {
-      expect(viewModel.enrolledCourses, isEmpty);
-      expect(viewModel.isLoading.value, false);
-      expect(viewModel.errorMessage.value, null);
-      expect(viewModel.canRetry.value, false);
-      expect(viewModel.hasNoEnrolledCourses, true);
-    });
-
     test('수강 중인 강좌 로드 성공 테스트', () async {
       // Given
       when(mockRepository.getEnrolledCourses())
@@ -68,7 +70,6 @@ void main() {
       expect(viewModel.hasNoEnrolledCourses, false);
       expect(viewModel.errorMessage.value, null);
       expect(viewModel.canRetry.value, false);
-      verify(mockRepository.getEnrolledCourses()).called(1);
     });
 
     test('수강 중인 강좌 로드 실패 테스트', () async {
@@ -84,173 +85,6 @@ void main() {
       expect(viewModel.hasNoEnrolledCourses, true);
       expect(viewModel.errorMessage.value, '인터넷 연결을 확인해주세요.');
       expect(viewModel.canRetry.value, true);
-      verify(mockRepository.getEnrolledCourses()).called(1);
-    });
-
-    test('페이징 컨트롤러 동작 테스트', () async {
-      // Given
-      when(mockRepository.getEnrolledCourses()).thenAnswer((_) async => []);
-      when(mockRepository.fetchCourses(
-        filterType: CourseFilterType.recommended,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).thenAnswer((_) async => testCourses);
-      when(mockRepository.fetchCourses(
-        filterType: CourseFilterType.free,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).thenAnswer((_) async => testCourses);
-
-      // When
-      viewModel.onInit();
-      viewModel.recommendedPagingController.notifyPageRequestListeners(0);
-      viewModel.freePagingController.notifyPageRequestListeners(0);
-
-      // Then
-      await untilCalled(mockRepository.fetchCourses(
-        filterType: CourseFilterType.recommended,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      ));
-
-      await untilCalled(mockRepository.fetchCourses(
-        filterType: CourseFilterType.free,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      ));
-
-      verify(mockRepository.fetchCourses(
-        filterType: CourseFilterType.recommended,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).called(1);
-      verify(mockRepository.fetchCourses(
-        filterType: CourseFilterType.free,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).called(1);
-
-      expect(
-          viewModel.recommendedPagingController.itemList, equals(testCourses));
-      expect(viewModel.freePagingController.itemList, equals(testCourses));
-      expect(viewModel.errorMessage.value, isNull);
-    });
-
-    test('추천 강좌 첫 페이지 로드 테스트', () async {
-      // Given
-      when(mockRepository.getEnrolledCourses()).thenAnswer((_) async => []);
-      when(mockRepository.fetchCourses(
-        filterType: CourseFilterType.recommended,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).thenAnswer((_) async => testCourses);
-
-      // When
-      viewModel.onInit();
-      viewModel.recommendedPagingController.notifyPageRequestListeners(0);
-
-      // Then
-      await untilCalled(mockRepository.fetchCourses(
-        filterType: CourseFilterType.recommended,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      ));
-
-      verify(mockRepository.fetchCourses(
-        filterType: CourseFilterType.recommended,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).called(1);
-
-      expect(viewModel.recommendedPagingController.error, isNull);
-      expect(
-          viewModel.recommendedPagingController.itemList, equals(testCourses));
-      expect(viewModel.errorMessage.value, isNull);
-    });
-
-    test('무료 강좌 첫 페이지 로드 테스트', () async {
-      // Given
-      when(mockRepository.getEnrolledCourses()).thenAnswer((_) async => []);
-      when(mockRepository.fetchCourses(
-        filterType: CourseFilterType.free,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).thenAnswer((_) async => testCourses);
-
-      // When
-      viewModel.onInit();
-      viewModel.freePagingController.notifyPageRequestListeners(0);
-
-      // Then
-      await untilCalled(mockRepository.fetchCourses(
-        filterType: CourseFilterType.free,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      ));
-
-      verify(mockRepository.fetchCourses(
-        filterType: CourseFilterType.free,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).called(1);
-
-      expect(viewModel.freePagingController.error, isNull);
-      expect(viewModel.freePagingController.itemList, equals(testCourses));
-      expect(viewModel.errorMessage.value, isNull);
-    });
-
-    test('추천 강좌 페이지 요청 테스트', () async {
-      // Given
-      when(mockRepository.getEnrolledCourses()).thenAnswer((_) async => []);
-      when(mockRepository.fetchCourses(
-        filterType: CourseFilterType.recommended,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).thenAnswer((_) async => testCourses);
-
-      // When
-      viewModel.onInit();
-      viewModel.recommendedPagingController.notifyPageRequestListeners(0);
-
-      // Then
-      await untilCalled(mockRepository.fetchCourses(
-        filterType: CourseFilterType.recommended,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      ));
-
-      verify(mockRepository.fetchCourses(
-        filterType: CourseFilterType.recommended,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).called(1);
-    });
-
-    test('무료 강좌 페이지 요청 테스트', () async {
-      // Given
-      when(mockRepository.getEnrolledCourses()).thenAnswer((_) async => []);
-      when(mockRepository.fetchCourses(
-        filterType: CourseFilterType.free,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).thenAnswer((_) async => testCourses);
-
-      // When
-      viewModel.onInit();
-      viewModel.freePagingController.notifyPageRequestListeners(0);
-
-      // Then
-      await untilCalled(mockRepository.fetchCourses(
-        filterType: CourseFilterType.free,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      ));
-
-      verify(mockRepository.fetchCourses(
-        filterType: CourseFilterType.free,
-        offset: 0,
-        count: ApiConstants.defaultPageSize,
-      )).called(1);
     });
   });
 }

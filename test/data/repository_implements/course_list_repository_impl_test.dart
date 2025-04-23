@@ -197,59 +197,62 @@ void main() {
           .thenReturn(['18818']);
 
       when(mockRemoteSource.getCourseList(
-              queryParameters: anyNamed('queryParameters')))
-          .thenAnswer((_) async => Response(
-                data: {
-                  'courses': [
-                    {
-                      'id': 18818,
-                      'title': '도레미 파이썬 Vol.1',
-                      'short_description': '파이썬 기초 강좌',
-                      'description': '파이썬 프로그래밍의 기초를 배우는 강좌입니다.',
-                      'image_file_url': 'https://example.com/python1.jpg',
-                      'logo_file_url': 'https://example.com/python1-logo.jpg',
-                      'taglist': ['프로그래밍', '파이썬', '입문'],
-                      'is_recommended': true,
-                      'is_free': false,
-                    }
-                  ]
-                },
-                statusCode: 200,
-                requestOptions: RequestOptions(path: ''),
-              ));
+        queryParameters: {
+          'offset': 0,
+          'count': 1, // enrolledIds.length와 일치
+          'filter_conditions': {
+            'course_ids': ['18818']
+          },
+        },
+      )).thenAnswer((_) async => Response(
+            data: {
+              'courses': [
+                {
+                  'id': 18818,
+                  'title': '도레미 파이썬 Vol.1',
+                  'short_description': '파이썬 기초 강좌',
+                  'description': '파이썬 프로그래밍의 기초를 배우는 강좌입니다.',
+                  'image_file_url': 'https://example.com/python1.jpg',
+                  'logo_file_url': 'https://example.com/python1-logo.jpg',
+                  'taglist': ['프로그래밍', '파이썬', '입문'],
+                  'is_recommended': true,
+                  'is_free': false,
+                }
+              ]
+            },
+            statusCode: 200,
+            requestOptions: RequestOptions(path: ''),
+          ));
 
       // when
       final courses = await repository.getEnrolledCourses();
 
       // then
-      verify(mockRemoteSource.getCourseList(queryParameters: {
-        'offset': 0,
-        'count': ApiConstants.defaultPageSize,
-        'filter_conditions': {
-          'course_ids': ['18818']
+      verify(mockRemoteSource.getCourseList(
+        queryParameters: {
+          'offset': 0,
+          'count': 1, // enrolledIds.length와 일치
+          'filter_conditions': {
+            'course_ids': ['18818']
+          },
         },
-      })).called(1);
+      )).called(1);
 
       expect(courses.length, 1);
       expect(courses[0].id, 18818);
     });
 
-    test('수강 중인 강좌가 없을 경우 빈 리스트 반환', () async {
+    test('수강 중인 강좌가 없을 경우 API 호출 없이 빈 리스트 반환', () async {
       // given
       when(mockPreferences.getStringList(enrolledCoursesKey)).thenReturn([]);
-
-      when(mockRemoteSource.getCourseList(
-              queryParameters: anyNamed('queryParameters')))
-          .thenAnswer((_) async => Response(
-                data: {'courses': []},
-                statusCode: 200,
-                requestOptions: RequestOptions(path: ''),
-              ));
 
       // when
       final courses = await repository.getEnrolledCourses();
 
       // then
+      verifyNever(mockRemoteSource.getCourseList(
+        queryParameters: anyNamed('queryParameters'),
+      ));
       expect(courses, isEmpty);
     });
   });
