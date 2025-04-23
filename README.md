@@ -191,3 +191,6 @@ PR 단위로 UI 컴포넌트 리뷰가 가능한 구조를 설정했습니다.
     
 
 > `.github/workflows/`에 설정된 CI 스크립트를 통해 모든 PR이 검증된 뒤 병합됩니다.
+
+
+> 🔒 이 레포지토리는 @elice-mobile 계정에 private access로 공유된 상태입니다.
