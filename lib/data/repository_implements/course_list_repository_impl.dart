@@ -39,13 +39,16 @@ class CourseListRepositoryImpl implements CourseListRepository {
       dev.log(
           'fetchCourses 시작 - filterType: $filterType, offset: $offset, count: $count');
 
-      final enrolledIds = _preferences.getStringList('enrolled_course_ids');
+      final enrolledIds =
+          _preferences.getStringList('enrolled_course_ids') ?? [];
       dev.log('저장된 수강 강좌 ID 목록: $enrolledIds');
 
       final query = CourseListQuery.fromFilterType(
         filterType: filterType,
         offset: offset,
-        count: count,
+        count: filterType == CourseFilterType.enrolled
+            ? enrolledIds.length
+            : count,
         enrolledCourseIds:
             filterType == CourseFilterType.enrolled ? enrolledIds : null,
       );
