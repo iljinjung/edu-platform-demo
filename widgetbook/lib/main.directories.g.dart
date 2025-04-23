@@ -13,6 +13,8 @@ import 'package:edu_platform_demo_widgetbook/widgetbook/app_button.dart' as _i2;
 import 'package:edu_platform_demo_widgetbook/widgetbook/course_card.dart'
     as _i3;
 import 'package:edu_platform_demo_widgetbook/widgetbook/course_title_area.dart'
+    as _i5;
+import 'package:edu_platform_demo_widgetbook/widgetbook/lecture_list.dart'
     as _i4;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
@@ -68,6 +70,24 @@ final directories = <_i1.WidgetbookNode>[
             ],
           ),
           _i1.WidgetbookFolder(
+            name: 'lecture',
+            children: [
+              _i1.WidgetbookComponent(
+                name: 'LectureList',
+                useCases: [
+                  _i1.WidgetbookUseCase(
+                    name: '기본 강의 목록',
+                    builder: _i4.buildDefaultLectureList,
+                  ),
+                  _i1.WidgetbookUseCase(
+                    name: '미리보기 강의가 포함된 목록',
+                    builder: _i4.buildLectureListWithPreview,
+                  ),
+                ],
+              )
+            ],
+          ),
+          _i1.WidgetbookFolder(
             name: 'title',
             children: [
               _i1.WidgetbookComponent(
@@ -75,15 +95,15 @@ final directories = <_i1.WidgetbookNode>[
                 useCases: [
                   _i1.WidgetbookUseCase(
                     name: 'With Cover Image',
-                    builder: _i4.buildCourseTitleAreaWithCover,
+                    builder: _i5.buildCourseTitleAreaWithCover,
                   ),
                   _i1.WidgetbookUseCase(
                     name: 'Without Cover Image',
-                    builder: _i4.buildCourseTitleAreaWithoutCover,
+                    builder: _i5.buildCourseTitleAreaWithoutCover,
                   ),
                   _i1.WidgetbookUseCase(
                     name: 'Without Logo',
-                    builder: _i4.buildCourseTitleAreaWithoutLogo,
+                    builder: _i5.buildCourseTitleAreaWithoutLogo,
                   ),
                 ],
               )

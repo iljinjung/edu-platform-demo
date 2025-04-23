@@ -1,5 +1,6 @@
 class ApiConstants {
-  static const String baseUrl = 'https://api.example.com'; // API 기본 URL로 변경 필요
+  static const String baseUrl =
+      'https://api-rest.elice.io/org/academy'; // API 기본 URL로 변경 필요
 
   // API Endpoints
   static const String courseList = '/course/list/';

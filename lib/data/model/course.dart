@@ -7,13 +7,16 @@ part 'course.g.dart';
 @freezed
 class Course with _$Course {
   const factory Course({
-    required int id,
-    required String title,
-    @JsonKey(name: 'short_description') required String shortDescription,
-    required String description,
-    @JsonKey(name: 'image_file_url') required String imageFileUrl,
-    @JsonKey(name: 'logo_file_url') required String logoFileUrl,
-    required List<String> taglist,
+    @JsonKey(fromJson: _intFromJson) required int id,
+    @JsonKey(fromJson: _stringFromJson) required String title,
+    @JsonKey(name: 'short_description', fromJson: _stringFromJson)
+    required String shortDescription,
+    @JsonKey(fromJson: _stringFromJson) required String description,
+    @JsonKey(name: 'image_file_url', fromJson: _stringFromJson)
+    required String imageFileUrl,
+    @JsonKey(name: 'logo_file_url', fromJson: _stringFromJson)
+    required String logoFileUrl,
+    @JsonKey(fromJson: _stringListFromJson) required List<String> taglist,
     @JsonKey(name: 'is_recommended') @Default(false) bool isRecommended,
     @JsonKey(name: 'is_free') @Default(false) bool isFree,
     String? price,
@@ -23,4 +26,12 @@ class Course with _$Course {
   }) = _Course;
 
   factory Course.fromJson(Map<String, dynamic> json) => _$CourseFromJson(json);
+}
+
+String _stringFromJson(dynamic value) => value?.toString() ?? '';
+int _intFromJson(dynamic value) => value == null ? 0 : (value as num).toInt();
+List<String> _stringListFromJson(dynamic value) {
+  if (value == null) return [];
+  if (value is List) return value.map((e) => e?.toString() ?? '').toList();
+  return [];
 }

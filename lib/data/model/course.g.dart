@@ -7,14 +7,13 @@ part of 'course.dart';
 // **************************************************************************
 
 _$CourseImpl _$$CourseImplFromJson(Map<String, dynamic> json) => _$CourseImpl(
-      id: (json['id'] as num).toInt(),
-      title: json['title'] as String,
-      shortDescription: json['short_description'] as String,
-      description: json['description'] as String,
-      imageFileUrl: json['image_file_url'] as String,
-      logoFileUrl: json['logo_file_url'] as String,
-      taglist:
-          (json['taglist'] as List<dynamic>).map((e) => e as String).toList(),
+      id: _intFromJson(json['id']),
+      title: _stringFromJson(json['title']),
+      shortDescription: _stringFromJson(json['short_description']),
+      description: _stringFromJson(json['description']),
+      imageFileUrl: _stringFromJson(json['image_file_url']),
+      logoFileUrl: _stringFromJson(json['logo_file_url']),
+      taglist: _stringListFromJson(json['taglist']),
       isRecommended: json['is_recommended'] as bool? ?? false,
       isFree: json['is_free'] as bool? ?? false,
       price: json['price'] as String?,

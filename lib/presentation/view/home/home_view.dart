@@ -1,133 +1,171 @@
-import 'package:edu_platform_demo/presentation/components/card/course_card.dart';
+import 'package:edu_platform_demo/data/model/course.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:edu_platform_demo/presentation/components/title/course_title_area.dart';
-import 'package:edu_platform_demo/presentation/components/lecture/lecture_list.dart';
-import 'package:edu_platform_demo/presentation/components/button/app_button.dart';
-import 'package:edu_platform_demo/data/model/lecture.dart';
+import 'dart:developer' as dev;
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class HomeView extends GetView {
+import 'package:edu_platform_demo/core/theme/app_colors.dart';
+import 'package:edu_platform_demo/core/theme/app_text_style.dart';
+import 'package:edu_platform_demo/presentation/components/card/course_card.dart';
+import 'package:edu_platform_demo/presentation/view_model/home/home_view_model.dart';
+
+class HomeView extends GetView<HomeViewModel> {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // 샘플 강의 데이터
-    final lectures = [
-      const Lecture(
-        id: 1,
-        title: 'Flutter 소개와 개발 환경 설정',
-        description: 'Flutter의 특징과 장점, 개발 환경 설정 방법을 알아봅니다.',
-        isOpened: true,
-        isPreview: false,
-        orderNo: 1,
-      ),
-      const Lecture(
-        id: 2,
-        title: 'Dart 언어 기초와 문법',
-        description: 'Flutter 개발에 필요한 Dart 언어의 기초 문법을 학습합니다.',
-        isOpened: true,
-        isPreview: false,
-        orderNo: 2,
-      ),
-      const Lecture(
-        id: 3,
-        title: '위젯의 이해와 기본 UI 구현',
-        description: 'Flutter의 기본 위젯들을 살펴보고 간단한 UI를 구현해봅니다.',
-        isOpened: true,
-        isPreview: false,
-        orderNo: 3,
-      ),
-    ];
-
-    // 샘플 코스 카드 데이터
-    final courses = List.generate(
-        5,
-        (index) => {
-              'imageFileUrl': 'https://picsum.photos/seed/course$index/400',
-              'logoFileUrl': 'https://picsum.photos/seed/logo$index/200',
-              'title': 'C언어 챌린지 ${index + 1}',
-              'shortDescription': '나의 C언어 실력을 테스트 해보세요!',
-              'taglist': ['플러터', '앱개발', '프로그래밍'],
-            });
-
     return Scaffold(
-      body: Stack(
-        children: [
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.only(top: 16),
-              child: Column(
-                children: [
-                  // 가로 스크롤되는 코스 카드 목록
-                  SizedBox(
-                    height: 220,
-                    child: SingleChildScrollView(
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              'assets/images/logos/logo.png',
+              width: 147.10,
+              height: 32,
+              fit: BoxFit.cover,
+            ),
+            Container(
+              padding: const EdgeInsets.all(4),
+              child: Image.asset(
+                'assets/images/icons/search.png',
+                width: 24,
+                height: 24,
+              ),
+            ),
+          ],
+        ),
+        toolbarHeight: 64,
+      ),
+      body: RefreshIndicator(
+        onRefresh: controller.refreshAll,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    '무료 과목',
+                    style: AppTextStyle.sectionTitle,
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  child: SizedBox(
+                    height: 250,
+                    child: PagedListView<int, Course>(
+                      pagingController: controller.freePagingController,
                       scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          for (var i = 0; i < courses.length; i++) ...[
-                            if (i > 0) const SizedBox(width: 16),
-                            CourseCard(
-                              imageFileUrl: null,
-                              logoFileUrl: courses[i]['logoFileUrl'] as String,
-                              title: courses[i]['title'] as String,
-                              shortDescription:
-                                  courses[i]['shortDescription'] as String,
-                              taglist: (courses[i]['taglist'] as List<String>),
-                            ),
-                          ],
-                        ],
+                      padding: const EdgeInsets.all(16),
+                      builderDelegate: PagedChildBuilderDelegate<Course>(
+                        itemBuilder: (context, course, index) => Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: CourseCard(
+                            imageFileUrl: course.imageFileUrl,
+                            logoFileUrl: course.logoFileUrl,
+                            title: course.title,
+                            shortDescription: course.shortDescription,
+                            taglist: course.taglist,
+                          ),
+                        ),
+                        noItemsFoundIndicatorBuilder: (_) =>
+                            const Center(child: Text('표시할 강좌가 없습니다.')),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  // 커버 이미지가 있는 경우
-                  const CourseTitleArea(
-                    title: '플러터로 시작하는 크로스플랫폼 앱 개발',
-                    logoFileUrl: 'https://picsum.photos/seed/logo1/200',
-                    imageFileUrl: 'https://picsum.photos/seed/cover1/400',
-                    description: '플러터의 기초부터 실전 프로젝트까지',
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    '추천 과목',
+                    style: AppTextStyle.sectionTitle,
                   ),
-                  const SizedBox(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: LectureList(
-                      items: lectures,
-                      width: double.infinity,
+                ),
+                Container(
+                  width: double.infinity,
+                  child: SizedBox(
+                    height: 250,
+                    child: PagedListView<int, Course>(
+                      pagingController: controller.recommendedPagingController,
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.all(16),
+                      builderDelegate: PagedChildBuilderDelegate<Course>(
+                        itemBuilder: (context, course, index) => Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: CourseCard(
+                            imageFileUrl: course.imageFileUrl,
+                            logoFileUrl: course.logoFileUrl,
+                            title: course.title,
+                            shortDescription: course.shortDescription,
+                            taglist: course.taglist,
+                          ),
+                        ),
+                        noItemsFoundIndicatorBuilder: (_) =>
+                            const Center(child: Text('표시할 강좌가 없습니다.')),
+                      ),
                     ),
                   ),
-                  // 하단 버튼의 공간을 확보하기 위한 여백
-                  const SizedBox(height: 80),
-                ],
-              ),
-            ),
-          ),
-          // 하단 고정 버튼
-          Positioned(
-            left: 16,
-            right: 16,
-            bottom: MediaQuery.of(context).padding.bottom + 16,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, -5),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    '내 학습',
+                    style: AppTextStyle.sectionTitle,
                   ),
-                ],
-              ),
-              child: AppButton(
-                label: '수강 신청',
-                onPressed: () {
-                  // TODO: 수강 신청 처리
-                },
-              ),
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Obx(() {
+                    if (controller.isLoading.value) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+
+                    if (controller.hasNoEnrolledCourses) {
+                      return Container(
+                        height: 150,
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Center(child: Text('수강 중인 강좌가 없습니다.')),
+                      );
+                    }
+
+                    return SizedBox(
+                      height: 250,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.all(16),
+                        itemCount: controller.enrolledCourses.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 16),
+                        itemBuilder: (context, index) {
+                          final course = controller.enrolledCourses[index];
+                          return CourseCard(
+                            imageFileUrl: course.imageFileUrl,
+                            logoFileUrl: course.logoFileUrl,
+                            title: course.title,
+                            shortDescription: course.shortDescription,
+                            taglist: course.taglist,
+                          );
+                        },
+                      ),
+                    );
+                  }),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
