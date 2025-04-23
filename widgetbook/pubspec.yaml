@@ -1,0 +1,25 @@
+name: edu_platform_demo_widgetbook
+description: "Widgetbook for edu_platform_demo"
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  widgetbook: ^3.13.0
+  widgetbook_annotation: ^3.4.0
+  edu_platform_demo:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.8
+  widgetbook_generator: ^3.12.0
+
+flutter:
+  uses-material-design: true

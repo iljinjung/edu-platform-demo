@@ -11,7 +11,7 @@ class AppColors {
   static const gray300 = Color(0xFFAEAEAE); // Divider
   static const gray400 = Color(0xFF888889); // 일반 회색 텍스트
   static const gray500 = Color(0xFF242424); // short description
-  static const gray600 = Color(0xFF121314); // 딥 그레이 배경
+  static const gray600 = Color(0xFF3A3A4C); // 딥 그레이 배경
 
   // 포인트 색상
   static const deepText = Color(0xFF3A3A4C); // 카드 커버 배경

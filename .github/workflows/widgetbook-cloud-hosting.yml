@@ -1,0 +1,69 @@
+name: Widgetbook Cloud Hosting
+
+on: 
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  widgetbook-cloud-hosting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Bootstrap App
+        working-directory: widgetbook
+        run: flutter pub get
+
+      - name: Generate Widgetbook directories
+        working-directory: widgetbook
+        run: |
+          dart run build_runner clean
+          dart run build_runner build --delete-conflicting-outputs
+
+      - name: Build Widgetbook Web Output
+        working-directory: widgetbook
+        run: flutter build web -t lib/main.dart
+
+      - name: Install Widgetbook CLI
+        run: dart pub global activate widgetbook_cli
+
+      - name: Verify Widgetbook Cache
+        working-directory: widgetbook
+        run: |
+          echo "Current directory: $PWD"
+          echo "Checking build_runner generated files:"
+          ls -la .dart_tool/build/generated || true
+          echo "Checking Widgetbook generated files:"
+          find .dart_tool/build/generated -type f -name "*.dart" || true
+          echo "Checking main.directories.g.dart:"
+          cat lib/main.directories.g.dart || true
+          echo "Listing build directory:"
+          ls -la build/web || true
+
+      - name: Push Widgetbook to Cloud
+        working-directory: widgetbook
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            widgetbook cloud build push \
+              --api-key ${{ secrets.WIDGETBOOK_API_KEY }} \
+              --branch ${{ github.head_ref }} \
+              --commit ${{ github.event.pull_request.head.sha }} \
+              --repository ${{ github.repository }}
+          else
+            widgetbook cloud build push \
+              --api-key ${{ secrets.WIDGETBOOK_API_KEY }} \
+              --branch ${{ github.ref_name }} \
+              --commit ${{ github.sha }} \
+              --repository ${{ github.repository }}
+          fi
