@@ -207,7 +207,7 @@ class _LectureListItem extends StatelessWidget {
       left: 8,
       top: 28,
       child: CustomPaint(
-        size: const Size(2, 48),
+        size: const Size(2, 68),
         painter: _BottomLinePainter(isOpened: isOpened),
       ),
     );

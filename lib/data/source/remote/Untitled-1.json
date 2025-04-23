@@ -1,0 +1,351 @@
+{
+    "_result": {
+      "status": "ok",
+      "reason": null
+    },
+    "course": {
+      "id": 736239,
+      "organization_id": 1009,
+      "origin_course": null,
+      "course_info_id": 1608479,
+      "course_info_user": {
+        "id": 13601625,
+        "fullname": "강결희",
+        "firstname": "강결희",
+        "lastname": "",
+        "profile_url": "https://cdn-api.elice.io/api/file/2241cfba60664816b5c6fa54991136a8/account_7360039_profile.jpg?se=2025-05-01T00%3A15%3A00Z&sp=r&sv=2021-12-02&sr=b&sig=7SY2uy5GxgrCVIerg4Qpn0JRG2ubLT75w7gNaW/9Eic%3D"
+      },
+      "course_info_created_datetime": 1744965420675,
+      "is_recommended": false,
+      "is_chat_room_disabled": false,
+      "is_post_student_info_visible": false,
+      "is_post_student_email_enabled": false,
+      "is_post_tutor_email_enabled": false,
+      "preference": {
+        "boards": false,
+        "images": true,
+        "manage": true,
+        "configs": false,
+        "landing": {
+          "mode": "v2",
+          "configs_v2": {
+            "bg_color": "{\"r\":255,\"g\":200,\"b\":0,\"a\":1}",
+            "sections": [
+              {
+                "type": "review",
+                "uuid": "cacd641b-8f31-4370-a148-ed1ca4c0eefc",
+                "payload": {
+                  "label": "리뷰",
+                  "title": "📝 리뷰",
+                  "reviews": [
+                    {
+                      "title": "에이전트 개발의 핵심을 짚어주는 강의",
+                      "image_url": "https://static.elice.io/course/course-manage/user_profile_2.png",
+                      "description": "이 강의는 에이전트 개발에 필요한 핵심 프레임워크들을 알기 쉽게 설명해줘요. 복잡한 개념도 예시를 통해 쉽게 이해할 수 있었고, 실제 프로젝트에 바로 적용할 수 있을 것 같아요. 에이전트 개발에 관심 있는 분들께 추천합니다!"
+                    },
+                    {
+                      "title": "프레임워크 선택의 길잡이",
+                      "image_url": "https://static.elice.io/course/course-manage/user_profile_7.png",
+                      "description": "프레임워크 선택에 혼란을 느끼던 중, 이 강의가 큰 도움이 되었습니다. 각 프레임워크의 장단점을 비교하며 설명해주어, 상황에 맞는 선택이 가능해졌습니다. 에이전트 개발의 방향성을 잡는 데 유용한 강의입니다."
+                    },
+                    {
+                      "title": "실무 중심의 프레임워크 이해",
+                      "image_url": "https://static.elice.io/course/course-manage/user_profile_10.png",
+                      "description": "Unit 2는 smolagents, LlamaIndex, LangGraph와 같은 주요 에이전트 프레임워크를 체계적으로 소개합니다. 각 프레임워크의 특징과 활용 시점을 명확히 설명하여, 실무에서의 적용 가능성을 높여줍니다. 프레임워크 선택에 고민이 있는 분들에게 유익한 내용입니다."
+                    }
+                  ],
+                  "visible": true,
+                  "align_mode": "horizontal",
+                  "description": "",
+                  "average_rate": "4.8",
+                  "anchor_enabled": true
+                }
+              },
+              {
+                "type": "objective",
+                "uuid": "4656eb75-a2b1-4062-9200-ab47c3aacef5",
+                "payload": {
+                  "label": "강의 목표",
+                  "title": "✅ 강의 목표",
+                  "visible": true,
+                  "align_mode": "vertical",
+                  "objectives": [
+                    {
+                      "title": "<p style=\"text-align:left\"> 📍  smolagents, LlamaIndex, LangGraph 등 주요 에이전트 프레임워크가 무엇이며, 어떤 구조로 작동하는지 이해합니다.\\n\\n 📍 각 프레임워크의 강점과 제한점을 파악하고, 실무나 프로젝트에 적합한 선택 기준을 학습합니다.\\n\\n 📍 프롬프트 관리, 상태 추적, 도구 호출 등 에이전트 구성에 필요한 핵심 요소들을 인식하고 응용할 수 있게 됩니다.</p>"
+                    }
+                  ],
+                  "description": "",
+                  "anchor_enabled": true
+                }
+              },
+              {
+                "type": "markdown",
+                "uuid": "911dc60d-a3dd-471d-9a16-70d4541a4cdb",
+                "payload": {
+                  "label": "소개",
+                  "title": "🔮 에이전트 프레임워크",
+                  "content": "<h1 class=\"editor-heading-h1\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"background-color: rgb(236, 223, 255); white-space: pre-wrap;\">\"AI가 나 대신 일해주면 얼마나 좋을까?\"</strong></b></h1><p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\">그런 생각, 해보신 적 있나요?</span><br><span style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\">이 강의는 </span><b><strong class=\"editor-text-bold\" style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\">복잡한 코딩 지식 없이도</strong></b><span style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\"> AI 에이전트를 직접 만들어볼 수 있도록 도와주는 수업입니다.</span></p><p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\">(이 강의의 실습을 진행하기 위해서는 </span><b><strong class=\"editor-text-bold\" style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\">OpenAI API KEY</strong></b><span style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\">가 필요합니다.)</span></p><blockquote class=\"editor-quote\" dir=\"ltr\"><span style=\"font-size: 17px; white-space: pre-wrap;\">💡 특히 이 강의는 </span><a href=\"https://huggingface.co/learn/agents-course/unit0/introduction\" rel=\"noreferrer\" class=\"editor-link\"><b><strong class=\"editor-text-bold\" style=\"font-size: 17px; white-space: pre-wrap;\">Hugging Face의 'Agents Course'</strong></b></a><b><strong class=\"editor-text-bold\" style=\"font-size: 17px; white-space: pre-wrap;\">를 한국어로 번역하고 내용을 재구성</strong></b><span style=\"font-size: 17px; white-space: pre-wrap;\">하여 만든 강의로,</span><br><span style=\"font-size: 17px; white-space: pre-wrap;\">글로벌 기준의 최신 내용을 </span><b><strong class=\"editor-text-bold\" style=\"font-size: 17px; white-space: pre-wrap;\">비전공자도 이해하기 쉽게</strong></b><span style=\"font-size: 17px; white-space: pre-wrap;\"> 풀어낸 것이 특징이에요.</span></blockquote><div data-lexical-raw-html_v2=\"PGh0bWw+PGhlYWQ+PC9oZWFkPjxib2R5PjxkaXYgc3R5bGU9InRleHQtYWxpZ246Y2VudGVyIj48aW1nIHNyYz0iaHR0cHM6Ly9jZG4tYXBpLmVsaWNlLmlvL2FwaS1hdHRhY2htZW50L2F0dGFjaG1lbnQvNjA0NmU3NTQ5YzFiNDc2YjhlNzQwNDBlYmMyOWExNmIvQ2hhdEdQVCUyMEltYWdlJTIwMjAyNSVFMSU4NCU4MiVFMSU4NSVBNyVFMSU4NiVBQiUyMDQlRTElODQlOEIlRTElODUlQUYlRTElODYlQUYlMjAxNSVFMSU4NCU4QiVFMSU4NSVCNSVFMSU4NiVBRiUyMCVFMSU4NCU4QiVFMSU4NSVBOSVFMSU4NCU5MiVFMSU4NSVBRSUyMDA1XzAxXzU0LnBuZyIgc3R5bGU9IndpZHRoOjQyMHB4Ij48L2Rpdj48L2JvZHk+PC9odG1sPg==\" style=\"white-space: normal;\"><div style=\"text-align:center\"><img src=\"https://cdn-api.elice.io/api-attachment/attachment/6046e7549c1b476b8e74040ebc29a16b/ChatGPT%20Image%202025%E1%84%82%E1%85%A7%E1%86%AB%204%E1%84%8B%E1%85%AF%E1%86%AF%2015%E1%84%8B%E1%85%B5%E1%86%AF%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%2005_01_54.png\" style=\"width:420px\"></div></div><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"font-size: 17px; white-space: pre-wrap;\">smolagents는 쉽게 말해, 작고 똑똑한 AI 에이전트를 손쉽게 만들 수 있게 도와주는 미니멀한 프레임워크예요.</strong></b><br><span style=\"font-size: 17px; white-space: pre-wrap;\">복잡한 설정 없이 간단한 코드로도 챗봇이나 자동화 시스템을 구현할 수 있도록 뒷받침해주는 역할을 해요.</span><br><span style=\"font-size: 17px; white-space: pre-wrap;\">이 강의에서는 smolagents의 핵심 구조부터 직접 에이전트를 구현하는 실습까지, 천천히 따라가며 익힐 수 있어요.</span></p><p class=\"editor-paragraph\"><br></p><h1 class=\"editor-heading-h1\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">설치 걱정은 NO!</strong></b></h1><p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\">웹 브라우저만 있으면 되는 </span><b><strong class=\"editor-text-bold\" style=\"color: rgb(103, 0, 230); font-size: 17px; white-space: pre-wrap;\">엘리스</strong></b><span style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\"> 플랫폼에서 바로 실습할 수 있어요.</span><br><span style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\">비전공자도 쉽게 시작하고, 끝날 땐 “나도 할 수 있네?” 하는 자신감을 얻을 수 있답니다.</span></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"color: rgb(0, 0, 0); font-size: 17px; white-space: pre-wrap;\">AI의 세상에 한 발 더 가까워지고 싶은 분들, 지금 시작해보세요!</strong></b></p>",
+                  "visible": true,
+                  "description": "",
+                  "anchor_enabled": true
+                }
+              },
+              {
+                "type": "imageCard",
+                "uuid": "23b04154-a1e9-44cf-9779-6dc01beb26d7",
+                "payload": {
+                  "cards": [
+                    {
+                      "title": "🧠 Hugging Face 강의를 바탕으로, 최신 AI 흐름을 빠르게 습득",
+                      "caption": "해당 자료는 실제 강의 자료의 일부입니다.",
+                      "image_url": "https://cdn-api.elice.io/api-attachment/attachment/a3fa1550016f40e78abcb7a00f7a34f4/%E1%84%8E%E1%85%AC%E1%84%89%E1%85%B5%E1%86%AB%20AI%20%E1%84%8B%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%90%E1%85%B3.jpg",
+                      "description": "Hugging Face가 직접 만든 AI Agents 강의 콘텐츠를 기반으로, 가장 앞서가는 AI 기술 트렌드를 소개합니다."
+                    },
+                    {
+                      "title": "💻 직접 실습하면서 AI를 체험해요",
+                      "caption": "해당 자료는 실제 진행할 실습 중 하나입니다.",
+                      "image_url": "https://cdn-api.elice.io/api-attachment/attachment/5191c68fb98f444cb915e3477308da0d/%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8%20%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5%20%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC%28%E1%84%87%E1%85%A2%E1%84%89%E1%85%A9%E1%86%A8%29.gif",
+                      "description": "따라 하기 쉬운 코드 예제와 실습 환경으로, 이론이 아닌 체험 중심의 학습이 가능합니다."
+                    },
+                    {
+                      "title": "👶 비전공자도 걱정 없이 시작할 수 있어요",
+                      "caption": "해당 자료는 실제 진행할 실습 중 하나입니다.",
+                      "image_url": "https://cdn-api.elice.io/api-attachment/attachment/70119c6aed7141cfac90e5d0406dd0e5/%E1%84%89%E1%85%B5%E1%86%AF%E1%84%89%E1%85%B3%E1%86%B8%20%E1%84%8B%E1%85%A8%E1%84%89%E1%85%B5.png",
+                      "description": "복잡한 수식이나 이론은 최소화! 일상 언어로 설명하고, 직관적인 예시와 그림으로 구성되어 있어 이해가 쉽습니다."
+                    }
+                  ],
+                  "label": "이미지 박스",
+                  "title": "⛳️  AI Agent Course 소개",
+                  "visible": true,
+                  "align_mode": "vertical",
+                  "description": "",
+                  "anchor_enabled": false
+                }
+              },
+              {
+                "type": "curriculum",
+                "uuid": "2ff99dc0-bc16-4201-ae23-4f60fbf6eee4",
+                "payload": {
+                  "label": "커리큘럼",
+                  "title": "🏃‍♂️ 커리큘럼",
+                  "visible": true,
+                  "file_url": "",
+                  "description": "",
+                  "anchor_enabled": true
+                }
+              },
+              {
+                "type": "profileCard",
+                "uuid": "e49e0477-38a2-43ce-8a84-8d540fc3c399",
+                "payload": {
+                  "cards": [
+                    {
+                      "title": "어떤 프레임워크를 써야 할지 모르겠어요! ",
+                      "image_url": "https://static.elice.io/course/course-manage/user_profile_4.png",
+                      "description": "에이전트 개발에 자주 쓰이는 3가지 도구를 한 번에 비교해드려요!"
+                    },
+                    {
+                      "title": "에이전트 구조가 너무 막연해요!",
+                      "image_url": "https://static.elice.io/course/course-manage/user_profile_5.png",
+                      "description": "각 프레임워크가 어떻게 다르고, 언제 써야 하는지 쉽게 알려드려요!"
+                    },
+                    {
+                      "title": "실무에 바로 적용할 수 있는 기준이 필요해요!",
+                      "image_url": "https://static.elice.io/course/course-manage/user_profile_1.png",
+                      "description": "장단점 비교 + 상황별 추천까지 싹 정리해드립니다!"
+                    }
+                  ],
+                  "label": "프로필 카드",
+                  "title": "👨‍💻 이런 사람들을 위한 강의에요!",
+                  "visible": true,
+                  "align_mode": "vertical",
+                  "description": "",
+                  "anchor_enabled": false
+                }
+              },
+              {
+                "type": "markdown",
+                "uuid": "fce44349-7988-422d-a656-f4dbe520eae1",
+                "payload": {
+                  "label": "마크다운 에디터",
+                  "title": "📚 함께 들으면 완성되는 AI 에이전트 여정!",
+                  "content": "<div data-lexical-raw-html_v2=\"PGh0bWw+PGhlYWQ+PC9oZWFkPjxib2R5Pgo8ZGl2IHN0eWxlPSJkaXNwbGF5OiBmbGV4OyBnYXA6IDE2cHg7IG92ZXJmbG93LXg6IGF1dG87IHBhZGRpbmc6IDEwcHggMDsgbWF4LXdpZHRoOiAxMDAlOyI+CgogIAogIDxhIHN0eWxlPSJ0ZXh0LWRlY29yYXRpb246IG5vbmU7IGNvbG9yOiBpbmhlcml0OyIgdGFyZ2V0PSJfYmxhbmsiIGhyZWY9Imh0dHBzOi8vZWxpY2UtbGlicmFyeS5lbGljZS5pby9jb3Vyc2VzLzczNDg2OS9pbmZvIj4KICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyMjBweDsgaGVpZ2h0OiAyNjBweDsgYmFja2dyb3VuZDogI0ZGRkJFQTsgcGFkZGluZzogMTZweDsgYm9yZGVyLXJhZGl1czogMTJweDsKICAgIGJveC1zaGFkb3c6IDAgNHB4IDhweCByZ2JhKDAsMCwwLDAuMDUpOyBjdXJzb3I6IHBvaW50ZXI7IGRpc3BsYXk6IGZsZXg7IGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47CiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47Ij4KICAgICAgPGgzIHN0eWxlPSJtYXJnaW4tdG9wOiAwOyAgZm9udC1zaXplOiAyMHB4OyI+8J+OryBMTE3qs7wg7JeQ7J207KCE7Yq4PC9oMz4KICAgICAgPHAgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsiPuyXkOydtOyghO2KuOydmCDquLDstIghIExMTeqzvCDsl5DsnbTsoITtirjsnZgg6rCc64WQ67aA7YSwIOqwhOuLqO2VnCDssZfrtIcg66eM65Ok6riw6rmM7KeAIOuPhOyghO2VtOuztOyEuOyalC48L3A+CiAgICA8L2Rpdj4KICA8L2E+CgogIAogIDxhIHN0eWxlPSJ0ZXh0LWRlY29yYXRpb246IG5vbmU7IGNvbG9yOiBpbmhlcml0OyIgdGFyZ2V0PSJfYmxhbmsiIGhyZWY9Imh0dHBzOi8vZWxpY2UtbGlicmFyeS5lbGljZS5pby9jb3Vyc2VzLzczNDg3MC9pbmZvIj4KICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyMjBweDsgaGVpZ2h0OiAyNjBweDsgYmFja2dyb3VuZDogI0ZGRUNCMzsgcGFkZGluZzogMTZweDsgYm9yZGVyLXJhZGl1czogMTJweDsKICAgIGJveC1zaGFkb3c6IDAgNnB4IDEycHggcmdiYSgyNTUsIDEyMiwgMCwgMC4zKTsgYm9yZGVyOiAycHggc29saWQgI0ZGN0EwMDsgY3Vyc29yOiBwb2ludGVyOyBkaXNwbGF5OiBmbGV4OyBmbGV4LWRpcmVjdGlvbjogY29sdW1uOwogICAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuOyI+CiAgICAgIDxoMyBzdHlsZT0ibWFyZ2luLXRvcDogMDsgZm9udC1zaXplOiAyMHB4OyBmb250LXdlaWdodDogNzAwOyI+8J+aqSDsl5DsnbTsoITtirgg7ZSE66CI7J6E7JuM7YGsPC9oMz4KICAgICAgPHAgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsiPuqwgOuzjeqzoCDrmJHrmJHtlZjqsowhIHNtb2xhZ2VudHMsIExsYW1hSW5kZXgsIExhbmdHcmFwaOuhnCDrgpjrp4zsnZgg7JeQ7J207KCE7Yq466W8IOunjOuTpOyWtOu0kOyalC48L3A+CiAgICA8L2Rpdj4KICA8L2E+CgogIAogIDxhIHN0eWxlPSJ0ZXh0LWRlY29yYXRpb246IG5vbmU7IGNvbG9yOiBpbmhlcml0OyIgdGFyZ2V0PSJfYmxhbmsiIGhyZWY9Imh0dHBzOi8vZWxpY2UtbGlicmFyeS5lbGljZS5pby9jb3Vyc2VzLzczNTc1Ny9pbmZvIj4KICAgIDxkaXYgc3R5bGU9IndpZHRoOiAyMjBweDsgaGVpZ2h0OiAyNjBweDsgYmFja2dyb3VuZDogI0ZGRDhBODsgcGFkZGluZzogMTZweDsgYm9yZGVyLXJhZGl1czogMTJweDsKICAgIGJveC1zaGFkb3c6IDAgNHB4IDhweCByZ2JhKDAsMCwwLDAuMDUpOyBjdXJzb3I6IHBvaW50ZXI7IGRpc3BsYXk6IGZsZXg7IGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47CiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47Ij4KICAgICAgPGgzIHN0eWxlPSJtYXJnaW4tdG9wOiAwOyBmb250LXNpemU6IDIwcHg7Ij7wn46vIOyLpOyghOycvOuhnCDrsLDsmrDripQgQUkg7JeQ7J207KCE7Yq4IO2ZnOyaqeuylTwvaDM+CiAgICAgIDxwIHN0eWxlPSJmb250LXNpemU6IDE2cHg7Ij7tmITsl4Xsspjrn7wg7Iuk7Iq17ZWY66mwIOuwsOyasOuKlCDsl5DsnbTsoITtirgg7Zmc7JqpISDsi6TsoIQg7JiI7KCc66GcIOqwkCDsnqHslYTrtJDsmpQuPC9wPgogICAgPC9kaXY+CiAgPC9hPgoKICAKICA8YSBzdHlsZT0idGV4dC1kZWNvcmF0aW9uOiBub25lOyBjb2xvcjogaW5oZXJpdDsiIHRhcmdldD0iX2JsYW5rIiBocmVmPSJodHRwczovL2VsaWNlLWxpYnJhcnkuZWxpY2UuaW8vY291cnNlcy83MzU3NTgvaW5mbyI+CiAgICA8ZGl2IHN0eWxlPSJ3aWR0aDogMjIwcHg7IGhlaWdodDogMjYwcHg7IGJhY2tncm91bmQ6ICNGRkJDQjM7IHBhZGRpbmc6IDE2cHg7IGJvcmRlci1yYWRpdXM6IDEycHg7CiAgICBib3gtc2hhZG93OiAwIDRweCA4cHggcmdiYSgwLDAsMCwwLjA1KTsgY3Vyc29yOiBwb2ludGVyOyBkaXNwbGF5OiBmbGV4OyBmbGV4LWRpcmVjdGlvbjogY29sdW1uOwogICAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuOyI+CiAgICAgIDxoMyBzdHlsZT0ibWFyZ2luLXRvcDogMDsgZm9udC1zaXplOiAyMHB4OyI+8J+OryDrsqTsuZjrp4jtgazrpbwg7Ya17ZWcIOyXkOydtOyghO2KuCDshLHriqUg7Y+J6rCAPC9oMz4KICAgICAgPHAgc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsiPuyWtOuWpCDsl5DsnbTsoITtirjqsIAg642UIOuYkeuYke2VoOq5jD8g67Kk7LmY66eI7YGs66GcIOyngeygkSDruYTqtZDtlbTrtJDsmpQuPC9wPgogICAgPC9kaXY+CiAgPC9hPgoKPC9kaXY+CjwvYm9keT48L2h0bWw+\" style=\"white-space: normal;\">\n<div style=\"display: flex; gap: 16px; overflow-x: auto; padding: 10px 0; max-width: 100%;\">\n\n  \n  <a style=\"text-decoration: none; color: inherit;\" target=\"_blank\" href=\"https://elice-library.elice.io/courses/734869/info\">\n    <div style=\"width: 220px; height: 260px; background: #FFFBEA; padding: 16px; border-radius: 12px;\n    box-shadow: 0 4px 8px rgba(0,0,0,0.05); cursor: pointer; display: flex; flex-direction: column;\n    justify-content: space-between;\">\n      <h3 style=\"margin-top: 0;  font-size: 20px;\">🎯 LLM과 에이전트</h3>\n      <p style=\"font-size: 16px;\">에이전트의 기초! LLM과 에이전트의 개념부터 간단한 챗봇 만들기까지 도전해보세요.</p>\n    </div>\n  </a>\n\n  \n  <a style=\"text-decoration: none; color: inherit;\" target=\"_blank\" href=\"https://elice-library.elice.io/courses/734870/info\">\n    <div style=\"width: 220px; height: 260px; background: #FFECB3; padding: 16px; border-radius: 12px;\n    box-shadow: 0 6px 12px rgba(255, 122, 0, 0.3); border: 2px solid #FF7A00; cursor: pointer; display: flex; flex-direction: column;\n    justify-content: space-between;\">\n      <h3 style=\"margin-top: 0; font-size: 20px; font-weight: 700;\">🚩 에이전트 프레임워크</h3>\n      <p style=\"font-size: 16px;\">가볍고 똑똑하게! smolagents, LlamaIndex, LangGraph로 나만의 에이전트를 만들어봐요.</p>\n    </div>\n  </a>\n\n  \n  <a style=\"text-decoration: none; color: inherit;\" target=\"_blank\" href=\"https://elice-library.elice.io/courses/735757/info\">\n    <div style=\"width: 220px; height: 260px; background: #FFD8A8; padding: 16px; border-radius: 12px;\n    box-shadow: 0 4px 8px rgba(0,0,0,0.05); cursor: pointer; display: flex; flex-direction: column;\n    justify-content: space-between;\">\n      <h3 style=\"margin-top: 0; font-size: 20px;\">🎯 실전으로 배우는 AI 에이전트 활용법</h3>\n      <p style=\"font-size: 16px;\">현업처럼 실습하며 배우는 에이전트 활용! 실전 예제로 감 잡아봐요.</p>\n    </div>\n  </a>\n\n  \n  <a style=\"text-decoration: none; color: inherit;\" target=\"_blank\" href=\"https://elice-library.elice.io/courses/735758/info\">\n    <div style=\"width: 220px; height: 260px; background: #FFBCB3; padding: 16px; border-radius: 12px;\n    box-shadow: 0 4px 8px rgba(0,0,0,0.05); cursor: pointer; display: flex; flex-direction: column;\n    justify-content: space-between;\">\n      <h3 style=\"margin-top: 0; font-size: 20px;\">🎯 벤치마크를 통한 에이전트 성능 평가</h3>\n      <p style=\"font-size: 16px;\">어떤 에이전트가 더 똑똑할까? 벤치마크로 직접 비교해봐요.</p>\n    </div>\n  </a>\n\n</div>\n</div><p class=\"editor-paragraph\"><br></p><p class=\"editor-paragraph\"><br></p>",
+                  "visible": false,
+                  "description": "각 카드에 링크가 연결되어 있습니다. 세팅하실 때 참고 부탁드리며, 사용하지 않는다면 비활성화해 주세요.",
+                  "anchor_enabled": false
+                }
+              },
+              {
+                "type": "faq",
+                "uuid": "9f2e5e72-9bd0-468f-9762-cae66e084a2a",
+                "payload": {
+                  "faqs": [
+                    {
+                      "answer": "Unit 2는 실제로 작동하는 AI 에이전트를 만드는 실습 중심 강의예요. 에이전트가 도구를 사용하는 방식, 메모리나 검색 기능을 결합하는 방법 등을 직접 따라 하며 익힐 수 있어요!",
+                      "question": "🤫 이 강의에서는 뭘 배우게 되나요?"
+                    },
+                    {
+                      "answer": "네! Hugging Face에서는 실습 가능한 노트북과 코드 예제가 함께 제공되며, 별도 설치 없이 브라우저에서 바로 실행할 수 있어요.",
+                      "question": "⚙️ 실습 환경이 제공되나요?"
+                    },
+                    {
+                      "answer": "물론이죠! 기초적인 Python만 알고 있어도 충분히 따라갈 수 있도록 구성되어 있어요. 코드가 어렵지 않고, 단계별로 진행되기 때문에 부담 없이 도전해볼 수 있어요.",
+                      "question": "🙋 초보자도 따라갈 수 있을까요?"
+                    },
+                    {
+                      "answer": "나만의 AI 비서 만들기, 자동화된 질문 응답 시스템, 도구 활용형 챗봇 구축 등 다양한 실전 프로젝트에 바로 적용할 수 있어요!",
+                      "question": "🔧 이걸 배워서 어디에 활용할 수 있나요?"
+                    }
+                  ],
+                  "label": "FAQ",
+                  "title": "📌 FAQ",
+                  "visible": true,
+                  "description": "",
+                  "anchor_enabled": true
+                }
+              }
+            ],
+            "title_color": "{\"r\":0,\"g\":0,\"b\":0,\"a\":1}",
+            "ad_banner_link": "",
+            "promotion_type": "time",
+            "cover_image_url": "https://cdn-api.elice.io/api-attachment/attachment/7baff76175944d2ea997ecaf0cea2495/%E1%84%86%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AB%20%E1%84%91%E1%85%AD%E1%84%8C%E1%85%B5%20768%20x%20406%20px-2.png",
+            "ad_banner_image_url": "",
+            "short_description_color": "{\"r\":46,\"g\":46,\"b\":46,\"a\":1}"
+          }
+        },
+        "members": true,
+        "lectures": true,
+        "requests": true,
+        "sections": true,
+        "tutoring": true,
+        "dashboard": true,
+        "libraries": true,
+        "leaderboard": true,
+        "lectureroom": false,
+        "ai_dashboard": false,
+        "section_schedule": false
+      },
+      "enroll_begin_datetime": 1744965420500,
+      "enroll_end_datetime": null,
+      "release_datetime": null,
+      "begin_datetime": 1744965420500,
+      "end_datetime": null,
+      "complete_datetime": null,
+      "enrolled_role_period": null,
+      "brushup_info": null,
+      "enroll_type": 5,
+      "subscription_level": null,
+      "enroll_limit_number": null,
+      "price": "0",
+      "price_usd": "0",
+      "unit": 0,
+      "discounted_price": "0",
+      "discounted_price_usd": "0.00",
+      "discount_begin_datetime": null,
+      "discount_end_datetime": null,
+      "discount_title": null,
+      "discount_rate": null,
+      "completion_info": {
+        "unit": {
+          "value": 0.0,
+          "is_enabled": false
+        },
+        "condition": {
+          "score": 0,
+          "progress": 100,
+          "is_enabled": true
+        }
+      },
+      "course_type": 0,
+      "info_summary_visibility_dict": {
+        "level": true,
+        "period": false,
+        "class_type": true,
+        "class_times": false,
+        "completion_unit": false,
+        "exercise_page_count": true,
+        "completion_condition": true,
+        "programming_language": true,
+        "total_video_duration": true,
+        "enrolled_student_count": true,
+        "lecture_page_access_period": true
+      },
+      "is_exercise_deprecated": false,
+      "title": "[AI Agent Course] [Unit.2] 에이전트 프레임워크",
+      "code": "",
+      "description": "",
+      "short_description": "Smolagents, LlamaIndex, LangGraph 같은 에이전트 프레임워크를 활용해, 직접 에이전트를 만들며 배워보는 Hugging Face의 실습 중심 입문 강의예요.",
+      "target_audience": [],
+      "objective": [],
+      "faq": [],
+      "syllabus_url": null,
+      "image_file_url": "https://cdn-api.elice.io/api/file/930c57e9fa794b1ebf8356e08092e6e4/%5BUnit.2-1%5D%20%E1%84%8B%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%90%E1%85%B3%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%B7%E1%84%8B%E1%85%AF%E1%84%8F%E1%85%B3%20%28smolagents%29.png?se=2025-05-01T00%3A15%3A00Z&sp=r&sv=2021-12-02&sr=b&sig=QDQUTCXrj4cfnzfKb32/fXEPvenS3X4OarcfSLPCE1o%3D",
+      "logo_file_url": "https://cdn-api.elice.io/api/file/d12d31159c164a43aeda50219c31e03c/%E1%84%80%E1%85%AA%E1%84%86%E1%85%A9%E1%86%A8%20%E1%84%8A%E1%85%A5%E1%86%B7%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%AF%20.png?se=2025-05-01T00%3A15%3A00Z&sp=r&sv=2021-12-02&sr=b&sig=yNBBDV49DKiHlJOv1Bsamf/uRwe%2BGUagpqkWE5QLC64%3D",
+      "promote_video_url": null,
+      "class_times": [],
+      "class_type": 0,
+      "taglist": [],
+      "period": 4,
+      "version": 0,
+      "status": 0,
+      "is_free": true,
+      "is_discounted": false,
+      "created_datetime": 1744965420500,
+      "modified_datetime": 1744965420689,
+      "is_lms_course": false,
+      "is_enroll_noti_enabled": false,
+      "agreement_info": {
+        "title": "",
+        "is_enabled": false,
+        "description": ""
+      },
+      "leaderboard_ranking_type": 0,
+      "leaderboard_info": {
+        "entry_type": 0,
+        "score_type": 0,
+        "ranking_type": 0
+      },
+      "is_enroll_guest_enabled": false,
+      "is_legacy_test": true,
+      "course_agreed_datetime": null,
+      "is_datetime_enrollable": true,
+      "enrolled_req_user_count": 0,
+      "library_access_type": null,
+      "library_credit": null,
+      "is_course_library": null,
+      "is_material_library": null,
+      "origin_library_synced_datetime": null,
+      "ern": "ern:core::course/736239",
+      "product_uid": "/service:eliceapi/product_type:course/product_id:736239/",
+      "aibot_info": {
+        "is_enabled": true
+      },
+      "is_phone_verify_required": false,
+      "prerequisite_course_ids": [],
+      "_tags": {},
+      "last_review_status": 0,
+      "tags": [],
+      "tracks": [],
+      "library_type": 0,
+      "library_status": null,
+      "last_library_version_status": null,
+      "origin_library_version_name": null,
+      "is_origin_library_sync_enabled": null,
+      "enrolled_user_count": 2,
+      "enrolled_student_count": 0,
+      "normal_lecture_count": 5,
+      "test_lecture_count": 0,
+      "normal_lecture_page_count": 53,
+      "total_video_duration": 3273,
+      "exercise_page_count": 0,
+      "lectures": [],
+      "test_lecture": null,
+      "tas": [],
+      "head_tas": [],
+      "instructors": []
+    },
+    "course_sections": [],
+    "course_role": 0,
+    "has_past_course_role": false
+  }
+  

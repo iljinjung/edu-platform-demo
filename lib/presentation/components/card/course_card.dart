@@ -24,6 +24,12 @@ class CourseCard extends StatelessWidget {
   /// 강좌 관련 태그 목록
   final List<String> taglist;
 
+  /// 강좌 ID
+  final int courseId;
+
+  /// 클릭 이벤트 핸들러
+  final Function(int) onTap;
+
   const CourseCard({
     super.key,
     this.imageFileUrl,
@@ -31,31 +37,36 @@ class CourseCard extends StatelessWidget {
     required this.title,
     required this.shortDescription,
     required this.taglist,
+    required this.courseId,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 230,
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+    return GestureDetector(
+      onTap: () => onTap(courseId),
+      child: Container(
+        width: 200,
+        height: 230,
+        clipBehavior: Clip.antiAlias,
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildImageContainer(),
-          const SizedBox(height: 8),
-          _buildTitle(),
-          const SizedBox(height: 2),
-          _buildDescription(),
-          const SizedBox(height: 8),
-          _buildTagList(),
-          const SizedBox(height: 8),
-        ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildImageContainer(),
+            const SizedBox(height: 8),
+            _buildTitle(),
+            const SizedBox(height: 2),
+            _buildDescription(),
+            const SizedBox(height: 8),
+            _buildTagList(),
+            const SizedBox(height: 8),
+          ],
+        ),
       ),
     );
   }

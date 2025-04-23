@@ -27,6 +27,9 @@ void main() {
     imageFileUrl: 'https://test.com/image.jpg',
     logoFileUrl: 'https://test.com/logo.jpg',
     taglist: ['테스트', '강좌'],
+    isRecommended: true,
+    isFree: true,
+    isFavorite: true,
   );
 
   final testLectures = [
@@ -233,6 +236,9 @@ void main() {
         imageFileUrl: 'image.jpg',
         logoFileUrl: 'logo.jpg',
         taglist: ['태그'],
+        isRecommended: true,
+        isFree: true,
+        isFavorite: true,
       );
       when(mockDetailRepo.getCourse(1))
           .thenAnswer((_) async => courseWithoutDesc);

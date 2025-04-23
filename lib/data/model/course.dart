@@ -1,37 +1,80 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-part 'course.freezed.dart';
-part 'course.g.dart';
+class Course {
+  final int id;
+  final String title;
+  final String shortDescription;
+  final String description;
+  final String imageFileUrl;
+  final String logoFileUrl;
+  final List<String> taglist;
+  final bool isRecommended;
+  final bool isFree;
+  final String? price;
+  final String? discountedPrice;
+  final String? discountRate;
+  final bool isFavorite;
+  final String markdownHtml;
 
-@freezed
-class Course with _$Course {
-  const factory Course({
-    @JsonKey(fromJson: _intFromJson) required int id,
-    @JsonKey(fromJson: _stringFromJson) required String title,
-    @JsonKey(name: 'short_description', fromJson: _stringFromJson)
-    required String shortDescription,
-    @JsonKey(fromJson: _stringFromJson) required String description,
-    @JsonKey(name: 'image_file_url', fromJson: _stringFromJson)
-    required String imageFileUrl,
-    @JsonKey(name: 'logo_file_url', fromJson: _stringFromJson)
-    required String logoFileUrl,
-    @JsonKey(fromJson: _stringListFromJson) required List<String> taglist,
-    @JsonKey(name: 'is_recommended') @Default(false) bool isRecommended,
-    @JsonKey(name: 'is_free') @Default(false) bool isFree,
-    String? price,
-    @JsonKey(name: 'discounted_price') String? discountedPrice,
-    @JsonKey(name: 'discount_rate') String? discountRate,
-    @JsonKey(name: 'is_favorite') @Default(false) bool isFavorite,
-  }) = _Course;
+  Course({
+    required this.id,
+    required this.title,
+    required this.shortDescription,
+    required this.description,
+    required this.imageFileUrl,
+    required this.logoFileUrl,
+    required this.taglist,
+    required this.isRecommended,
+    required this.isFree,
+    this.price,
+    this.discountedPrice,
+    this.discountRate,
+    required this.isFavorite,
+    this.markdownHtml = '',
+  });
 
-  factory Course.fromJson(Map<String, dynamic> json) => _$CourseFromJson(json);
+  factory Course.fromJson(Map<String, dynamic> json) {
+    return Course(
+      id: _intFromJson(json['id']),
+      title: _stringFromJson(json['title']),
+      shortDescription: _stringFromJson(json['short_description']),
+      description: _stringFromJson(json['description']),
+      imageFileUrl: _stringFromJson(json['image_file_url']),
+      logoFileUrl: _stringFromJson(json['logo_file_url']),
+      taglist: _stringListFromJson(json['taglist']),
+      isRecommended: json['is_recommended'] ?? false,
+      isFree: json['is_free'] ?? false,
+      price: _nullableString(json['price']),
+      discountedPrice: _nullableString(json['discounted_price']),
+      discountRate: _nullableString(json['discount_rate']),
+      isFavorite: json['is_favorite'] ?? false,
+      markdownHtml: _extractMarkdownHtml(json['preference']),
+    );
+  }
 }
 
 String _stringFromJson(dynamic value) => value?.toString() ?? '';
 int _intFromJson(dynamic value) => value == null ? 0 : (value as num).toInt();
+String? _nullableString(dynamic value) => value?.toString();
 List<String> _stringListFromJson(dynamic value) {
   if (value == null) return [];
   if (value is List) return value.map((e) => e?.toString() ?? '').toList();
   return [];
+}
+
+String _extractMarkdownHtml(dynamic preference) {
+  try {
+    final sections = preference?['landing']?['configs_v2']?['sections'];
+    if (sections is List) {
+      for (final section in sections) {
+        if (section['type'] == 'markdown') {
+          final content = section['payload']?['content'];
+          if (content is String && content.trim().isNotEmpty) {
+            return content;
+          }
+        }
+      }
+    }
+  } catch (_) {}
+  return '';
 }

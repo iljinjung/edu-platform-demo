@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
 import 'package:edu_platform_demo/data/model/course.dart';
 import 'package:edu_platform_demo/data/model/lecture.dart';
 import 'package:edu_platform_demo/domain/repository/course_detail_repository.dart';
@@ -38,6 +39,9 @@ class CourseDetailViewModel extends GetxController {
   /// 현재 사용자의 수강 신청 상태
   final _isEnrolled = RxBool(false);
 
+  /// 초기 수강 신청 상태 (뒤로가기 시 변경 여부 확인용)
+  bool initialEnrollmentState = false;
+
   /// 데이터 로딩 상태
   final _isLoading = RxBool(false);
 
@@ -53,6 +57,22 @@ class CourseDetailViewModel extends GetxController {
   /// 강의 목록 로드 실패 여부
   final _lecturesLoadFailed = RxBool(false);
 
+  /// 수강 신청 중인지 여부
+  final _isEnrolling = RxBool(false);
+
+  @override
+  void onInit() {
+    super.onInit();
+    final arguments = Get.arguments;
+    if (arguments != null && arguments['courseId'] != null) {
+      final courseId = arguments['courseId'] as int;
+      loadCourseDetail(courseId);
+    } else {
+      _hasError.value = true;
+      _errorMessage.value = '강좌 ID가 전달되지 않았습니다.';
+    }
+  }
+
   // Getters
   /// 현재 조회 중인 강좌 정보
   Course? get course => _course.value;
@@ -62,6 +82,9 @@ class CourseDetailViewModel extends GetxController {
 
   /// 현재 사용자의 수강 신청 상태
   bool get isEnrolled => _isEnrolled.value;
+
+  /// 수강 신청 중인지 여부
+  bool get isEnrolling => _isEnrolling.value;
 
   /// 데이터 로딩 상태
   bool get isLoading => _isLoading.value;
@@ -81,7 +104,7 @@ class CourseDetailViewModel extends GetxController {
   /// 강좌 설명의 Markdown 표시 여부
   ///
   /// 설명이 비어있지 않은 경우에만 true를 반환합니다.
-  bool get shouldShowMarkdown => course?.description?.isNotEmpty ?? false;
+  bool get shouldShowMarkdown => course?.markdownHtml?.isNotEmpty ?? false;
 
   /// 강좌 상세 정보를 로드합니다.
   ///
@@ -104,6 +127,7 @@ class CourseDetailViewModel extends GetxController {
     try {
       final course = await courseDetailRepository.getCourse(courseId);
       _course.value = course;
+      debugPrint('Course 모델: $course');
     } on SocketException {
       _hasError.value = true;
       _errorMessage.value = '인터넷 연결을 확인해주세요.';
@@ -136,7 +160,7 @@ class CourseDetailViewModel extends GetxController {
 
     // 3. 수강 상태 확인 - 실패해도 계속 진행
     try {
-      _isEnrolled.value = await enrollmentRepository.isEnrolled(courseId);
+      await _checkEnrollmentStatus();
     } catch (e) {
       // 수강 상태 확인 실패 시 기본값 false 유지
     }
@@ -149,20 +173,14 @@ class CourseDetailViewModel extends GetxController {
   /// 현재 수강 중이면 수강 취소, 수강 중이 아니면 수강 신청으로 처리됩니다.
   /// 네트워크 오류나 서버 응답 지연 등의 문제 발생 시 적절한 에러 메시지를 표시합니다.
   Future<void> toggleEnrollment() async {
-    if (course == null) return;
+    if (course == null || _isEnrolling.value) return;
 
     try {
+      _isEnrolling.value = true;
       await enrollmentRepository.toggleEnrollment(course!.id);
-      _isEnrolled.value = !_isEnrolled.value;
-    } on SocketException {
-      _hasError.value = true;
-      _errorMessage.value = '인터넷 연결을 확인해주세요.';
-    } on TimeoutException {
-      _hasError.value = true;
-      _errorMessage.value = '서버 응답이 지연되고 있어요. 잠시 후 다시 시도해주세요.';
-    } catch (e) {
-      _hasError.value = true;
-      _errorMessage.value = '수강 신청/취소에 실패했습니다.';
+      await _checkEnrollmentStatus();
+    } finally {
+      _isEnrolling.value = false;
     }
   }
 
@@ -191,5 +209,22 @@ class CourseDetailViewModel extends GetxController {
       _lecturesLoadFailed.value = true;
       _lectures.clear();
     }
+  }
+
+  Future<void> _checkEnrollmentStatus() async {
+    if (course == null) return;
+
+    final wasInitialCheck = _isEnrolled.value == false && _isLoading.value;
+    _isEnrolled.value = await enrollmentRepository.isEnrolled(course!.id);
+
+    // 최초 로드 시에만 초기 상태 저장
+    if (wasInitialCheck) {
+      initialEnrollmentState = _isEnrolled.value;
+    }
+  }
+
+  void setCourse(Course course) {
+    _course.value = course;
+    _checkEnrollmentStatus();
   }
 }
