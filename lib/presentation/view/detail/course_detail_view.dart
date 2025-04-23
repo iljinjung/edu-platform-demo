@@ -74,7 +74,7 @@ class CourseDetailView extends GetView<CourseDetailViewModel> {
                       logoFileUrl: course.logoFileUrl,
                       imageFileUrl: course.imageFileUrl,
                     ),
-                    if (course.markdownHtml.trim().isNotEmpty) ...[
+                    if (controller.shouldShowDescriptionArea) ...[
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(
@@ -93,31 +93,45 @@ class CourseDetailView extends GetView<CourseDetailViewModel> {
                               height: 1,
                             ),
                             const SizedBox(height: 10),
-                            Html(
-                              data: course.markdownHtml,
-                              style: {
-                                "blockquote": Style(
-                                  padding: HtmlPaddings.all(12),
-                                  margin: Margins.symmetric(vertical: 8),
-                                  border: Border(
+                            if (controller.shouldUseMarkdownRenderer)
+                              MarkdownBody(
+                                data: controller.descriptionContent!,
+                                styleSheet: MarkdownStyleSheet(
+                                  blockquoteDecoration: BoxDecoration(
+                                    border: Border(
                                       left: BorderSide(
-                                          color: Colors.grey.shade400,
-                                          width: 4)),
-                                  fontStyle: FontStyle.italic,
+                                        color: Colors.grey.shade400,
+                                        width: 4,
+                                      ),
+                                    ),
+                                  ),
+                                  blockquotePadding: const EdgeInsets.all(12),
+                                  blockSpacing: 8.0,
                                 ),
-                                "strong": Style(
-                                  whiteSpace: WhiteSpace.normal,
-                                  fontFamily: 'Noto Sans KR',
-                                ),
-                                "b": Style(
-                                  whiteSpace: WhiteSpace.normal,
-                                  fontFamily: 'Noto Sans KR',
-                                ),
-                                "img": Style(
-                                  width: Width(contentWidth),
-                                ),
-                              },
-                            ),
+                              )
+                            else
+                              Html(
+                                data: controller.descriptionContent,
+                                style: {
+                                  "body": Style(
+                                    fontFamily: 'Noto Sans KR',
+                                  ),
+                                  "blockquote": Style(
+                                    padding: HtmlPaddings.all(12),
+                                    margin: Margins.symmetric(vertical: 8),
+                                    border: Border(
+                                      left: BorderSide(
+                                        color: Colors.grey.shade400,
+                                        width: 4,
+                                      ),
+                                    ),
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                  "img": Style(
+                                    width: Width(contentWidth),
+                                  ),
+                                },
+                              ),
                           ],
                         ),
                       ),

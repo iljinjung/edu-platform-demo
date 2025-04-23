@@ -7,9 +7,14 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/constants/api_constants.dart';
+import '../../../core/utils/snackbar_utils.dart';
 import '../../../data/model/course.dart';
 import '../../../domain/model/course_filter_type.dart';
 import '../../../domain/repository/course_list_repository.dart';
+import 'error_state.dart';
+import 'search_state.dart';
+import 'course_paging_state.dart';
+import 'error_handler.dart';
 
 /// 홈 화면의 상태를 관리하는 ViewModel
 ///
@@ -21,26 +26,19 @@ class HomeViewModel extends GetxController {
   /// 강좌 목록 조회를 위한 Repository
   final CourseListRepository courseListRepository;
 
-  /// 생성자
-  ///
-  /// [courseListRepository]는 필수로 주입받아야 합니다.
-  HomeViewModel({
-    required this.courseListRepository,
-  });
+  /// 검색 상태 관리
+  final _searchState = SearchState().obs;
+  bool get isSearchEnabled => _searchState.value.isEnabled;
 
-  /// 추천 강좌 페이징 컨트롤러
-  ///
-  /// 무한 스크롤을 위한 상태 관리
-  /// [firstPageKey]는 0부터 시작하여 [ApiConstants.defaultPageSize] 단위로 증가
-  final PagingController<int, Course> recommendedPagingController =
-      PagingController(firstPageKey: 0);
+  /// 추천 강좌 페이징 상태
+  late final CoursePagingState _recommendedPagingState;
+  PagingController<int, Course> get recommendedPagingController =>
+      _recommendedPagingState.pagingController;
 
-  /// 무료 강좌 페이징 컨트롤러
-  ///
-  /// 무한 스크롤을 위한 상태 관리
-  /// [firstPageKey]는 0부터 시작하여 [ApiConstants.defaultPageSize] 단위로 증가
-  final PagingController<int, Course> freePagingController =
-      PagingController(firstPageKey: 0);
+  /// 무료 강좌 페이징 상태
+  late final CoursePagingState _freePagingState;
+  PagingController<int, Course> get freePagingController =>
+      _freePagingState.pagingController;
 
   /// 수강 중인 강좌 목록
   ///
@@ -76,138 +74,47 @@ class HomeViewModel extends GetxController {
   /// 로딩 중이 아니고 수강 중인 강좌 목록이 비어있을 때 true
   bool get hasNoEnrolledCourses => !isLoading.value && enrolledCourses.isEmpty;
 
+  /// 에러 처리
+  final _errorHandler = ErrorHandler();
+  ErrorState? get currentError => _errorHandler.currentError.value;
+
+  /// 생성자
+  ///
+  /// [courseListRepository]는 필수로 주입받아야 합니다.
+  HomeViewModel({
+    required this.courseListRepository,
+  }) {
+    _initPagingStates();
+  }
+
   @override
   void onInit() {
     super.onInit();
-    _initPagingControllers();
-
-    _fetchCourses(
-      0,
-      CourseFilterType.free,
-      freePagingController,
-    );
-
-    _fetchCourses(
-      0,
-      CourseFilterType.recommended,
-      recommendedPagingController,
-    );
-
     _loadEnrolledCourses();
   }
 
   @override
   void onClose() {
-    recommendedPagingController.dispose();
-    freePagingController.dispose();
+    _recommendedPagingState.dispose();
+    _freePagingState.dispose();
     super.onClose();
   }
 
-  /// 페이징 컨트롤러 초기화
-  ///
-  /// 각 카테고리(추천, 무료)별 페이지 요청 리스너 등록
-  /// 스크롤이 끝에 도달하면 자동으로 다음 페이지 요청
-  void _initPagingControllers() {
-    recommendedPagingController.addPageRequestListener((pageKey) {
-      _fetchCourses(
-        pageKey,
-        CourseFilterType.recommended,
-        recommendedPagingController,
-      );
-    });
+  /// 페이징 상태 초기화
+  void _initPagingStates() {
+    _recommendedPagingState = CoursePagingState(
+      repository: courseListRepository,
+      filterType: CourseFilterType.recommended,
+      onError: _errorHandler.handleError,
+      onConnectionChanged: (isConnected) => _isConnected.value = isConnected,
+    );
 
-    freePagingController.addPageRequestListener((pageKey) {
-      _fetchCourses(
-        pageKey,
-        CourseFilterType.free,
-        freePagingController,
-      );
-    });
-  }
-
-  /// 강좌 목록 조회
-  ///
-  /// [pageKey]: 페이지 시작 위치 (offset)
-  /// [filterType]: 강좌 필터 타입 (추천/무료)
-  /// [controller]: 결과를 저장할 페이징 컨트롤러
-  ///
-  /// API 호출 결과를 페이징 컨트롤러에 추가하고,
-  /// 마지막 페이지 여부를 판단하여 처리
-  Future<void> _fetchCourses(
-    int pageKey,
-    CourseFilterType filterType,
-    PagingController<int, Course> controller,
-  ) async {
-    try {
-      dev.log(
-          'HomeViewModel._fetchCourses 시작 - pageKey: $pageKey, filterType: $filterType');
-      dev.log('현재 컨트롤러 상태 - itemList: ${controller.itemList?.length ?? 0}개');
-
-      // 네트워크 연결 확인
-      if (!_isConnected.value) {
-        dev.log('HomeViewModel._fetchCourses - 네트워크 연결 없음');
-        throw const SocketException('인터넷 연결을 확인해주세요.');
-      }
-
-      final courses = await courseListRepository.fetchCourses(
-        filterType: filterType,
-        offset: pageKey,
-        count: ApiConstants.defaultPageSize,
-      );
-
-      dev.log('HomeViewModel._fetchCourses - 강좌 데이터 수신: ${courses.length}개');
-      if (courses.isNotEmpty) {
-        // dev.log(
-        //     'HomeViewModel._fetchCourses - 첫 번째 강좌 데이터: ${courses.first.toJson()}');
-        // dev.log(
-        //     'HomeViewModel._fetchCourses - 마지막 강좌 데이터: ${courses.last.toJson()}');
-      }
-
-      final isLastPage = courses.length < ApiConstants.defaultPageSize;
-      if (isLastPage) {
-        dev.log('HomeViewModel._fetchCourses - 마지막 페이지 도달');
-        controller.appendLastPage(courses);
-      } else {
-        // dev.log(
-        //     'HomeViewModel._fetchCourses - 다음 페이지 있음, 다음 pageKey: ${pageKey + ApiConstants.defaultPageSize}');
-        controller.appendPage(
-          courses,
-          pageKey + ApiConstants.defaultPageSize,
-        );
-      }
-
-      dev.log(
-          '컨트롤러 업데이트 후 상태 - itemList: ${controller.itemList?.length ?? 0}개');
-
-      // 성공 시 에러 상태 초기화
-      errorMessage.value = null;
-      canRetry.value = false;
-      _isConnected.value = true;
-    } on SocketException catch (e) {
-      dev.log('HomeViewModel._fetchCourses - SocketException 발생', error: e);
-      _handleError(
-        controller: controller,
-        message: '인터넷 연결을 확인해주세요.',
-        error: e,
-        canRetry: true,
-      );
-      _isConnected.value = false;
-    } on TimeoutException catch (e) {
-      dev.log('HomeViewModel._fetchCourses - TimeoutException 발생', error: e);
-      _handleError(
-        controller: controller,
-        message: '서버 응답이 지연되고 있어요. 잠시 후 다시 시도해주세요.',
-        error: e,
-        canRetry: true,
-      );
-    } catch (error) {
-      dev.log('HomeViewModel._fetchCourses - 예상치 못한 에러 발생', error: error);
-      _handleError(
-        controller: controller,
-        message: '강좌 목록을 불러오지 못했어요. 잠시 후 다시 시도해주세요.',
-        error: error,
-      );
-    }
+    _freePagingState = CoursePagingState(
+      repository: courseListRepository,
+      filterType: CourseFilterType.free,
+      onError: _errorHandler.handleError,
+      onConnectionChanged: (isConnected) => _isConnected.value = isConnected,
+    );
   }
 
   /// 수강 중인 강좌 목록 로드
@@ -232,28 +139,36 @@ class HomeViewModel extends GetxController {
 
       enrolledCourses.assignAll(courses);
       debugPrint('코스 아이디: 수강 중인 강좌 목록 업데이트 완료');
-      errorMessage.value = null;
-      canRetry.value = false;
+      _errorHandler.clearError();
       _isConnected.value = true;
     } on SocketException catch (e) {
       dev.log('HomeViewModel._loadEnrolledCourses - SocketException 발생',
           error: e);
-      errorMessage.value = '인터넷 연결을 확인해주세요.';
       _isConnected.value = false;
-      print('Error loading enrolled courses: $e');
-      canRetry.value = true;
+
+      _errorHandler.handleError(ErrorState(
+        message: '인터넷 연결을 확인해주세요.',
+        canRetry: true,
+        onRetry: () => _loadEnrolledCourses(),
+      ));
     } on TimeoutException catch (e) {
       dev.log('HomeViewModel._loadEnrolledCourses - TimeoutException 발생',
           error: e);
-      errorMessage.value = '서버 응답이 지연되고 있어요. 잠시 후 다시 시도해주세요.';
-      print('Error loading enrolled courses: $e');
-      canRetry.value = true;
+
+      _errorHandler.handleError(ErrorState(
+        message: '서버 응답이 지연되고 있어요. 잠시 후 다시 시도해주세요.',
+        canRetry: true,
+        onRetry: () => _loadEnrolledCourses(),
+      ));
     } catch (error) {
       dev.log('HomeViewModel._loadEnrolledCourses - 예상치 못한 에러 발생',
           error: error);
-      errorMessage.value = '내 학습 강좌를 불러오지 못했어요.';
-      print('Error loading enrolled courses: $error');
-      canRetry.value = true;
+
+      _errorHandler.handleError(ErrorState(
+        message: '내 학습 강좌를 불러오지 못했어요.',
+        canRetry: true,
+        onRetry: () => _loadEnrolledCourses(),
+      ));
     } finally {
       isLoading(false);
       dev.log(
@@ -269,35 +184,11 @@ class HomeViewModel extends GetxController {
   /// - 네트워크 상태 초기화
   Future<void> refreshAll() async {
     dev.log('HomeViewModel.refreshAll 시작');
-    errorMessage.value = null;
-    canRetry.value = false;
+    _errorHandler.clearError();
     recommendedPagingController.refresh();
     freePagingController.refresh();
     await _loadEnrolledCourses();
     dev.log('HomeViewModel.refreshAll 종료');
-  }
-
-  /// 에러 처리를 위한 헬퍼 메서드
-  ///
-  /// [controller]: 에러를 설정할 페이징 컨트롤러
-  /// [message]: 사용자에게 표시할 에러 메시지
-  /// [error]: 발생한 에러 객체 (로깅용)
-  /// [canRetry]: 재시도 가능 여부
-  void _handleError({
-    required PagingController<int, Course> controller,
-    required String message,
-    required Object error,
-    bool canRetry = false,
-  }) {
-    dev.log('HomeViewModel._handleError',
-        error: error,
-        name: 'HomeViewModel',
-        stackTrace: error is Error ? error.stackTrace : null);
-
-    controller.error = error;
-    errorMessage.value = message;
-    this.canRetry.value = canRetry;
-    print('Error fetching courses: $error');
   }
 
   /// 수강 중인 강좌 목록을 새로고침합니다.
@@ -305,5 +196,16 @@ class HomeViewModel extends GetxController {
     debugPrint('코스 아이디: 수강 중인 강좌 목록 새로고침 시작');
     await _loadEnrolledCourses();
     debugPrint('코스 아이디: 수강 중인 강좌 목록 새로고침 완료');
+  }
+
+  /// 검색 버튼 클릭 처리
+  Future<void> handleSearchTap() async {
+    await _searchState.value.handleSearchTap();
+    _searchState.refresh();
+  }
+
+  /// 에러 상태 초기화
+  void clearError() {
+    _errorHandler.clearError();
   }
 }

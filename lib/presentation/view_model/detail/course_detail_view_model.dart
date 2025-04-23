@@ -106,6 +106,42 @@ class CourseDetailViewModel extends GetxController {
   /// 설명이 비어있지 않은 경우에만 true를 반환합니다.
   bool get shouldShowMarkdown => course?.markdownHtml?.isNotEmpty ?? false;
 
+  /// Description Area 표시 여부
+  ///
+  /// description 또는 markdownHtml 중 하나라도 있는 경우 true를 반환합니다.
+  bool get shouldShowDescriptionArea {
+    if (course == null) return false;
+    return hasDescription || hasMarkdownHtml;
+  }
+
+  /// Course description 존재 여부
+  bool get hasDescription => course?.description?.isNotEmpty ?? false;
+
+  /// Course markdownHtml 존재 여부
+  bool get hasMarkdownHtml => course?.markdownHtml?.trim().isNotEmpty ?? false;
+
+  /// Markdown 렌더러 사용 여부
+  ///
+  /// description이 있는 경우 Markdown 렌더러를 사용하고,
+  /// markdownHtml만 있는 경우 HTML 렌더러를 사용합니다.
+  bool get shouldUseMarkdownRenderer => hasDescription;
+
+  /// Description Area에 표시할 내용
+  ///
+  /// description이 있으면 description을,
+  /// 없고 markdownHtml이 있으면 markdownHtml을 반환합니다.
+  /// Markdown 렌더러를 사용할 경우 HTML 줄바꿈 태그를 Markdown 줄바꿈으로 변환합니다.
+  String? get descriptionContent {
+    if (course == null) return null;
+    if (hasDescription) {
+      return shouldUseMarkdownRenderer
+          ? course!.description.replaceAll('<br>', '  \n')
+          : course!.description;
+    }
+    if (hasMarkdownHtml) return course!.markdownHtml;
+    return null;
+  }
+
   /// 강좌 상세 정보를 로드합니다.
   ///
   /// [courseId]에 해당하는 강좌의 상세 정보, 강의 목록, 수강 상태를 조회합니다.
