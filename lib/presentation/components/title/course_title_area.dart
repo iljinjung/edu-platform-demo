@@ -38,6 +38,11 @@ class CourseTitleArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('코스 타이틀: 제목 - $title');
+    debugPrint('코스 타이틀: 로고 URL - $logoFileUrl');
+    debugPrint('코스 타이틀: 이미지 URL - $imageFileUrl');
+    debugPrint('코스 타이틀: hasCoverImage - $hasCoverImage');
+
     return Container(
       width: width ?? double.infinity,
       child: hasCoverImage ? _buildWithCover() : _buildWithoutCover(),
@@ -47,8 +52,11 @@ class CourseTitleArea extends StatelessWidget {
   /// 이미지를 표시하는 위젯을 생성합니다.
   Widget _buildImage(String? url,
       {double? width, double? height, BoxFit? fit}) {
-    // 테스트 환경에서는 기본 아이콘 표시
-    if (!kIsWeb && kDebugMode) {
+    debugPrint('코스 타이틀: _buildImage 호출 - URL: $url');
+
+    // URL이 null이거나 비어있는 경우 처리
+    if (url == null || url.isEmpty) {
+      debugPrint('코스 타이틀: URL이 null이거나 비어있음');
       return Container(
         width: width,
         height: height,
@@ -62,11 +70,28 @@ class CourseTitleArea extends StatelessWidget {
       );
     }
 
-    // 실제 환경에서는 네트워크 이미지 표시
-    return url != null
-        ? Image.network(url,
-            width: width, height: height, fit: fit ?? BoxFit.cover)
-        : const Icon(Icons.school, color: Colors.black45);
+    // 네트워크 이미지 표시
+    debugPrint('코스 타이틀: 네트워크 이미지 로드 시도 - $url');
+    return Image.network(
+      url,
+      width: width,
+      height: height,
+      fit: fit ?? BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        debugPrint('코스 타이틀: 이미지 로드 실패 - $error');
+        return Container(
+          width: width,
+          height: height,
+          color: AppColors.gray100,
+          child: const Center(
+            child: Icon(
+              Icons.error_outline,
+              color: Colors.black45,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   /// 커버 이미지가 있는 경우의 레이아웃
