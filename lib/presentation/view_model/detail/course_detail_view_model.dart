@@ -122,23 +122,29 @@ class CourseDetailViewModel extends GetxController {
 
   /// Markdown 렌더러 사용 여부
   ///
-  /// description이 있는 경우 Markdown 렌더러를 사용하고,
-  /// markdownHtml만 있는 경우 HTML 렌더러를 사용합니다.
-  bool get shouldUseMarkdownRenderer => hasDescription;
+  /// description이 HTML 태그를 포함하지 않는 경우에만 Markdown 렌더러를 사용합니다.
+  bool get shouldUseMarkdownRenderer {
+    if (!hasDescription) return false;
+    return !course!.description.contains(RegExp(r'<[^>]+>'));
+  }
 
   /// Description Area에 표시할 내용
   ///
   /// description이 있으면 description을,
   /// 없고 markdownHtml이 있으면 markdownHtml을 반환합니다.
-  /// Markdown 렌더러를 사용할 경우 HTML 줄바꿈 태그를 Markdown 줄바꿈으로 변환합니다.
   String? get descriptionContent {
     if (course == null) return null;
+
     if (hasDescription) {
-      return shouldUseMarkdownRenderer
-          ? course!.description.replaceAll('<br>', '  \n')
-          : course!.description;
+      if (shouldUseMarkdownRenderer) {
+        return course!.description.replaceAll('<br>', '  \n');
+      } else {
+        return course!.description;
+      }
     }
+
     if (hasMarkdownHtml) return course!.markdownHtml;
+
     return null;
   }
 
