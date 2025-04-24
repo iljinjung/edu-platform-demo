@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:edu_platform_demo/app/routes/app_pages.dart';
@@ -12,6 +13,12 @@ Future<void> main() async {
   // SharedPreferences 초기화 및 주입
   final prefs = await SharedPreferences.getInstance();
   Get.put(prefs);
+
+  // 화면 세로 모드로 고정
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   // 초기 바인딩 설정
   InitialBinding().dependencies();

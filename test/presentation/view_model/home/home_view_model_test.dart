@@ -74,11 +74,10 @@ void main() {
       // Then
       expect(viewModel.enrolledCourses, equals(testCourses));
       expect(viewModel.hasNoEnrolledCourses, false);
-      expect(viewModel.errorMessage.value, null);
-      expect(viewModel.canRetry.value, false);
+      expect(viewModel.currentError, isNull);
     });
 
-    test('수강 중인 강좌 로드 실패 테스트', () async {
+    test('수강 중인 강좌 로드 실패 - 네트워크 에러 테스트', () async {
       // Given
       when(mockRepository.getEnrolledCourses())
           .thenThrow(const SocketException('네트워크 에러'));
@@ -89,8 +88,34 @@ void main() {
       // Then
       expect(viewModel.enrolledCourses, isEmpty);
       expect(viewModel.hasNoEnrolledCourses, true);
-      expect(viewModel.errorMessage.value, '인터넷 연결을 확인해주세요.');
-      expect(viewModel.canRetry.value, true);
+      expect(viewModel.currentError?.message, '인터넷 연결을 확인해주세요.');
+      expect(viewModel.currentError?.canRetry, true);
+    });
+
+    test('에러 상태 초기화 테스트', () async {
+      // Given - 먼저 에러 상태 발생시키기
+      when(mockRepository.getEnrolledCourses())
+          .thenThrow(const SocketException('네트워크 에러'));
+      await viewModel.refreshAll();
+
+      // When
+      viewModel.clearError();
+
+      // Then
+      expect(viewModel.currentError, isNull);
+    });
+
+    test('수강 중인 강좌 새로고침 테스트', () async {
+      // Given
+      when(mockRepository.getEnrolledCourses())
+          .thenAnswer((_) async => testCourses);
+
+      // When
+      await viewModel.refreshEnrolledCourses();
+
+      // Then
+      expect(viewModel.enrolledCourses, equals(testCourses));
+      expect(viewModel.currentError, isNull);
     });
   });
 }
