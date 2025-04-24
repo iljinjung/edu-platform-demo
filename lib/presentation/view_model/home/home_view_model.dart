@@ -52,11 +52,6 @@ class HomeViewModel extends GetxController {
   /// 주로 수강 중인 강좌 목록 로딩 시 사용
   final RxBool isLoading = false.obs;
 
-  /// 재시도 가능 여부
-  ///
-  /// true일 경우 재시도 버튼을 표시
-  final RxBool canRetry = false.obs;
-
   /// 에러 메시지
   ///
   /// UI에서 표시할 사용자 친화적인 에러 메시지
