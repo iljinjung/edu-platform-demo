@@ -22,22 +22,16 @@ Widget buildDefaultLectureList(BuildContext context) {
       id: 1,
       title: '1. 플러터 소개',
       description: '플러터의 기본 개념과 특징을 알아봅니다.',
-      isOpened: true,
-      isPreview: false,
     ),
     Lecture(
       id: 2,
       title: '2. 개발 환경 설정',
       description: '플러터 개발을 위한 환경을 설정합니다.',
-      isOpened: false,
-      isPreview: false,
     ),
     Lecture(
       id: 3,
       title: '3. 첫 번째 앱 만들기',
       description: '간단한 앱을 만들어보며 플러터의 기본을 익힙니다.',
-      isOpened: false,
-      isPreview: false,
     ),
   ];
 
@@ -67,29 +61,21 @@ Widget buildLectureListWithPreview(BuildContext context) {
       id: 1,
       title: '1. 플러터 소개',
       description: '플러터의 기본 개념과 특징을 알아봅니다.',
-      isOpened: true,
-      isPreview: true,
     ),
     Lecture(
       id: 2,
       title: '2. 개발 환경 설정',
       description: '플러터 개발을 위한 환경을 설정합니다.',
-      isOpened: false,
-      isPreview: true,
     ),
     Lecture(
       id: 3,
       title: '3. 첫 번째 앱 만들기',
       description: '간단한 앱을 만들어보며 플러터의 기본을 익힙니다.',
-      isOpened: false,
-      isPreview: false,
     ),
     Lecture(
       id: 4,
       title: '4. 위젯의 이해',
       description: '플러터의 핵심인 위젯에 대해 자세히 알아봅니다.',
-      isOpened: false,
-      isPreview: false,
     ),
   ];
 
