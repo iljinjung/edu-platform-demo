@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../core/constants/api_constants.dart';
+import 'package:edu_platform_demo/core/constants/api_constants.dart';
 
 abstract class LectureRemoteSource {
   /// 강좌에 포함된 강의 목록을 조회합니다.

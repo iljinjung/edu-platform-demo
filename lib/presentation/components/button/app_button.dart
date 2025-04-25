@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_text_style.dart';
+import 'package:edu_platform_demo/core/theme/app_colors.dart';
+import 'package:edu_platform_demo/core/theme/app_text_style.dart';
 
 /// 앱 전반에서 사용되는 기본 버튼 컴포넌트
 ///

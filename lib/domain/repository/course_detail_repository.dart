@@ -1,7 +1,7 @@
 import 'package:edu_platform_demo/core/constants/api_constants.dart';
 
-import '../../data/model/course.dart';
-import '../../data/model/lecture.dart';
+import 'package:edu_platform_demo/data/model/course.dart';
+import 'package:edu_platform_demo/data/model/lecture.dart';
 
 /// 강좌 상세 정보 조회를 위한 Repository 인터페이스
 abstract class CourseDetailRepository {

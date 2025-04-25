@@ -2,15 +2,13 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:developer' as dev;
 
+import 'package:edu_platform_demo/data/model/course.dart';
+import 'package:edu_platform_demo/domain/model/course_filter_type.dart';
+import 'package:edu_platform_demo/domain/repository/course_list_repository.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../core/constants/api_constants.dart';
-import '../../../core/utils/snackbar_utils.dart';
-import '../../../data/model/course.dart';
-import '../../../domain/model/course_filter_type.dart';
-import '../../../domain/repository/course_list_repository.dart';
 import 'error_state.dart';
 import 'search_state.dart';
 import 'course_paging_state.dart';

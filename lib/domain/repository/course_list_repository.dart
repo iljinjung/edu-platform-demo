@@ -1,7 +1,7 @@
 import 'package:edu_platform_demo/core/constants/api_constants.dart';
 
-import '../model/course_filter_type.dart';
-import '../../data/model/course.dart';
+import 'package:edu_platform_demo/data/model/course.dart';
+import 'package:edu_platform_demo/domain/model/course_filter_type.dart';
 
 /// 강좌 목록 조회를 위한 Repository 인터페이스
 abstract class CourseListRepository {

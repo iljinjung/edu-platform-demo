@@ -1,5 +1,5 @@
-import '../../core/constants/api_constants.dart';
-import '../../domain/model/course_filter_type.dart';
+import 'package:edu_platform_demo/core/constants/api_constants.dart';
+import 'package:edu_platform_demo/domain/model/course_filter_type.dart';
 
 /// 강좌 목록 조회 API 요청에 사용되는 쿼리 파라미터를 관리하는 클래스
 class CourseListQuery {
