@@ -6,7 +6,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:edu_platform_demo/core/constants/api_constants.dart';
-import 'package:edu_platform_demo/data/model/course.dart';
+import 'package:edu_platform_demo/domain/model/course.dart';
 import 'package:edu_platform_demo/domain/model/course_filter_type.dart';
 import 'package:edu_platform_demo/domain/repository/course_list_repository.dart';
 import 'error_state.dart';

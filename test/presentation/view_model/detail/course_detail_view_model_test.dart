@@ -1,5 +1,5 @@
-import 'package:edu_platform_demo/data/model/course.dart';
-import 'package:edu_platform_demo/data/model/lecture.dart';
+import 'package:edu_platform_demo/domain/model/course.dart';
+import 'package:edu_platform_demo/domain/model/lecture.dart';
 import 'package:edu_platform_demo/domain/repository/course_detail_repository.dart';
 import 'package:edu_platform_demo/domain/repository/enrollment_repository.dart';
 import 'package:edu_platform_demo/presentation/view_model/detail/course_detail_view_model.dart';

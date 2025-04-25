@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:edu_platform_demo/core/theme/app_text_style.dart';
 import 'package:edu_platform_demo/core/theme/app_colors.dart';
-import 'package:edu_platform_demo/data/model/lecture.dart';
+import 'package:edu_platform_demo/domain/model/lecture.dart';
 
 /// 강의 목록을 표시하는 위젯
 ///

@@ -1,7 +1,7 @@
 import 'package:edu_platform_demo/core/constants/api_constants.dart';
 import 'package:edu_platform_demo/domain/repository/course_detail_repository.dart';
-import 'package:edu_platform_demo/data/model/course.dart';
-import 'package:edu_platform_demo/data/model/lecture.dart';
+import 'package:edu_platform_demo/domain/model/course.dart';
+import 'package:edu_platform_demo/domain/model/lecture.dart';
 import 'package:edu_platform_demo/data/source/remote/course_remote_source.dart';
 import 'package:edu_platform_demo/data/source/remote/lecture_remote_source.dart';
 import 'package:flutter/foundation.dart';

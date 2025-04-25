@@ -4,7 +4,7 @@ import 'dart:developer' as dev;
 import 'package:edu_platform_demo/core/constants/api_constants.dart';
 import 'package:edu_platform_demo/domain/model/course_filter_type.dart';
 import 'package:edu_platform_demo/domain/repository/course_list_repository.dart';
-import 'package:edu_platform_demo/data/model/course.dart';
+import 'package:edu_platform_demo/domain/model/course.dart';
 import 'package:edu_platform_demo/data/model/course_list_query.dart';
 import 'package:edu_platform_demo/data/source/remote/course_remote_source.dart';
 

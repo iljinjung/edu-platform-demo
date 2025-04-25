@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:developer' as dev;
 
-import 'package:edu_platform_demo/data/model/course.dart';
+import 'package:edu_platform_demo/domain/model/course.dart';
 import 'package:edu_platform_demo/domain/model/course_filter_type.dart';
 import 'package:edu_platform_demo/domain/repository/course_list_repository.dart';
 import 'package:get/get.dart';
