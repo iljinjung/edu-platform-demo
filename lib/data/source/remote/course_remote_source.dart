@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'dart:developer' as dev;
 
-import '../../../core/constants/api_constants.dart';
-import '../../../core/di/dio_provider.dart';
+import 'package:edu_platform_demo/core/constants/api_constants.dart';
 
 abstract class CourseRemoteSource {
   /// 강좌 목록을 조회합니다.

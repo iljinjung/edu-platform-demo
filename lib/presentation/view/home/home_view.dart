@@ -1,4 +1,4 @@
-import 'package:edu_platform_demo/data/model/course.dart';
+import 'package:edu_platform_demo/domain/model/course.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:developer' as dev;

@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
-import 'package:edu_platform_demo/data/model/course.dart';
-import 'package:edu_platform_demo/data/model/lecture.dart';
+import 'package:edu_platform_demo/domain/model/course.dart';
+import 'package:edu_platform_demo/domain/model/lecture.dart';
 import 'package:edu_platform_demo/domain/repository/course_detail_repository.dart';
 import 'package:edu_platform_demo/domain/repository/enrollment_repository.dart';
+import 'package:edu_platform_demo/core/utils/markdown_utils.dart';
 
 /// 강좌 상세 화면의 비즈니스 로직을 담당하는 ViewModel
 ///
@@ -122,22 +123,19 @@ class CourseDetailViewModel extends GetxController {
 
   /// Markdown 렌더러 사용 여부
   ///
-  /// description이 HTML 태그를 포함하지 않는 경우에만 Markdown 렌더러를 사용합니다.
+  /// description이 HTML 태그를 포함하지 않고 마크다운 형식인 경우에만 Markdown 렌더러를 사용합니다.
   bool get shouldUseMarkdownRenderer {
     if (!hasDescription) return false;
-    return !course!.description.contains(RegExp(r'<[^>]+>'));
+    return MarkdownUtils.shouldUseMarkdownRenderer(course!.description);
   }
 
   /// Description Area에 표시할 내용
-  ///
-  /// description이 있으면 description을,
-  /// 없고 markdownHtml이 있으면 markdownHtml을 반환합니다.
   String? get descriptionContent {
     if (course == null) return null;
 
     if (hasDescription) {
       if (shouldUseMarkdownRenderer) {
-        return course!.description.replaceAll('<br>', '  \n');
+        return MarkdownUtils.preprocessMarkdown(course!.description);
       } else {
         return course!.description;
       }

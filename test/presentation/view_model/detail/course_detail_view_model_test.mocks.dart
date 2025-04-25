@@ -5,8 +5,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:edu_platform_demo/data/model/course.dart' as _i2;
-import 'package:edu_platform_demo/data/model/lecture.dart' as _i5;
+import 'package:edu_platform_demo/domain/model/course.dart' as _i2;
+import 'package:edu_platform_demo/domain/model/lecture.dart' as _i5;
 import 'package:edu_platform_demo/domain/repository/course_detail_repository.dart'
     as _i3;
 import 'package:edu_platform_demo/domain/repository/enrollment_repository.dart'

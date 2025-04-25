@@ -1,8 +1,8 @@
+import 'package:edu_platform_demo/domain/model/lecture.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 import 'package:edu_platform_demo/presentation/components/lecture/lecture_list.dart';
-import 'package:edu_platform_demo/data/model/lecture.dart';
 
 @widgetbook.UseCase(
   name: '기본 강의 목록',

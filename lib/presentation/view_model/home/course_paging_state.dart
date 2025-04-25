@@ -5,10 +5,10 @@ import 'dart:developer' as dev;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../core/constants/api_constants.dart';
-import '../../../data/model/course.dart';
-import '../../../domain/model/course_filter_type.dart';
-import '../../../domain/repository/course_list_repository.dart';
+import 'package:edu_platform_demo/core/constants/api_constants.dart';
+import 'package:edu_platform_demo/domain/model/course.dart';
+import 'package:edu_platform_demo/domain/model/course_filter_type.dart';
+import 'package:edu_platform_demo/domain/repository/course_list_repository.dart';
 import 'error_state.dart';
 
 /// 강좌 목록의 페이징 상태를 관리하는 클래스

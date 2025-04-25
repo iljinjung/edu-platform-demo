@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import '../../data/model/course.dart';
+import 'package:edu_platform_demo/domain/model/course.dart';
 
 class CourseDetailPage extends StatelessWidget {
   final Course course;

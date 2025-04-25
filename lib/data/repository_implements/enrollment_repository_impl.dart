@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../domain/repository/enrollment_repository.dart';
+import 'package:edu_platform_demo/domain/repository/enrollment_repository.dart';
 
 /// EnrollmentRepository 구현체
 ///
