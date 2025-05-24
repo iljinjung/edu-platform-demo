@@ -1,7 +1,7 @@
 import 'dart:developer' as dev;
-import 'package:dio/dio.dart';
 
 import 'package:edu_platform_demo/core/constants/api_constants.dart';
+import 'package:edu_platform_demo/core/networking/dio_wrapper.dart';
 
 abstract class LectureRemoteSource {
   /// 강좌에 포함된 강의 목록을 조회합니다.
@@ -35,7 +35,7 @@ abstract class LectureRemoteSource {
   ///   }
   /// }
   /// ```
-  Future<Response<Map<String, dynamic>>> getLectureList({
+  Future<ApiResponse<Map<String, dynamic>>> getLectureList({
     required String courseId,
     int offset = 0,
     int count = ApiConstants.defaultPageSize,
@@ -43,31 +43,30 @@ abstract class LectureRemoteSource {
 }
 
 class LectureRemoteSourceImpl implements LectureRemoteSource {
-  final Dio _dio;
+  final DioWrapper _dioWrapper;
 
-  LectureRemoteSourceImpl({required Dio dio}) : _dio = dio;
+  LectureRemoteSourceImpl({required DioWrapper dioWrapper}) : _dioWrapper = dioWrapper;
 
   @override
-  Future<Response<Map<String, dynamic>>> getLectureList({
+  Future<ApiResponse<Map<String, dynamic>>> getLectureList({
     required String courseId,
     int offset = 0,
     int count = ApiConstants.defaultPageSize,
   }) async {
     dev.log('LectureRemoteSource.getLectureList 호출 - courseId: $courseId, offset: $offset, count: $count');
-    try {
-      final response = await _dio.get<Map<String, dynamic>>(
-        ApiConstants.lectureList,
-        queryParameters: {
-          ApiConstants.courseId: courseId,
-          ApiConstants.offset: offset,
-          ApiConstants.count: count,
-        },
-      );
+    final response = await _dioWrapper.getData<Map<String, dynamic>>(
+      ApiConstants.lectureList,
+      queryParameters: {
+        ApiConstants.courseId: courseId,
+        ApiConstants.offset: offset,
+        ApiConstants.count: count,
+      },
+    );
 
-      return response;
-    } catch (e, stackTrace) {
-      dev.log('LectureRemoteSource.getLectureList 에러 발생', error: e, stackTrace: stackTrace);
-      rethrow;
+    if (!response.isSuccess) {
+      dev.log('LectureRemoteSource.getLectureList 에러 발생 - ${response.errorMessage}',
+          error: response.errorMessage);
     }
+    return response;
   }
 }

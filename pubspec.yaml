@@ -12,6 +12,7 @@ dependencies:
   
   # HTTP 통신
   dio: ^5.4.1
+  dio_smart_retry: ^7.0.1
   
   # DI, 상태관리, 라우팅
   get: ^4.6.6

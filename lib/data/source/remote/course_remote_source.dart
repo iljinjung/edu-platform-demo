@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'dart:developer' as dev;
 
 import 'package:edu_platform_demo/core/constants/api_constants.dart';
+import 'package:edu_platform_demo/core/networking/dio_wrapper.dart';
 
 abstract class CourseRemoteSource {
   /// 강좌 목록을 조회합니다.
@@ -40,7 +40,7 @@ abstract class CourseRemoteSource {
   ///   }
   /// }
   /// ```
-  Future<Response<Map<String, dynamic>>> getCourseList({
+  Future<ApiResponse<Map<String, dynamic>>> getCourseList({
     required Map<String, dynamic> queryParameters,
   });
 
@@ -81,66 +81,55 @@ abstract class CourseRemoteSource {
   ///   }
   /// }
   /// ```
-  Future<Response<Map<String, dynamic>>> getCourseDetail({
+  Future<ApiResponse<Map<String, dynamic>>> getCourseDetail({
     required String courseId,
   });
 }
 
 class CourseRemoteSourceImpl implements CourseRemoteSource {
-  final Dio _dio;
+  final DioWrapper _dioWrapper;
 
-  CourseRemoteSourceImpl({required Dio dio}) : _dio = dio;
+  CourseRemoteSourceImpl({required DioWrapper dioWrapper}) : _dioWrapper = dioWrapper;
 
   @override
-  Future<Response<Map<String, dynamic>>> getCourseList({
+  Future<ApiResponse<Map<String, dynamic>>> getCourseList({
     required Map<String, dynamic> queryParameters,
   }) async {
-    try {
-      dev.log('CourseRemoteSource.getCourseList 호출 - 파라미터: $queryParameters');
+    dev.log('CourseRemoteSource.getCourseList 호출 - 파라미터: $queryParameters');
+    final response = await _dioWrapper.getData<Map<String, dynamic>>(
+      ApiConstants.courseList,
+      queryParameters: queryParameters,
+    );
 
-      final response = await _dio.get<Map<String, dynamic>>(
-        ApiConstants.courseList,
-        queryParameters: queryParameters,
-      );
-
-      // dev.log(
-      //     'CourseRemoteSource.getCourseList 응답 - 상태 코드: ${response.statusCode}');
-      // dev.log('CourseRemoteSource.getCourseList 응답 - 헤더: ${response.headers}');
+    if (response.isSuccess) {
+      // dev.log('CourseRemoteSource.getCourseList 응답 - 상태 코드: ${response.statusCode}');
       // dev.log('CourseRemoteSource.getCourseList 응답 - 데이터: ${response.data}');
-
-      return response;
-    } catch (e, stackTrace) {
-      dev.log('CourseRemoteSource.getCourseList 에러 발생',
-          error: e, stackTrace: stackTrace);
-      rethrow;
+    } else {
+      dev.log('CourseRemoteSource.getCourseList 에러 발생 - ${response.errorMessage}',
+          error: response.errorMessage); // Consider adding more error details if available
     }
+    return response;
   }
 
   @override
-  Future<Response<Map<String, dynamic>>> getCourseDetail({
+  Future<ApiResponse<Map<String, dynamic>>> getCourseDetail({
     required String courseId,
   }) async {
-    try {
-      dev.log('CourseRemoteSource.getCourseDetail 호출 - courseId: $courseId');
+    dev.log('CourseRemoteSource.getCourseDetail 호출 - courseId: $courseId');
+    final response = await _dioWrapper.getData<Map<String, dynamic>>(
+      ApiConstants.courseGet,
+      queryParameters: {
+        ApiConstants.courseId: courseId,
+      },
+    );
 
-      final response = await _dio.get<Map<String, dynamic>>(
-        ApiConstants.courseGet,
-        queryParameters: {
-          ApiConstants.courseId: courseId,
-        },
-      );
-
-      // dev.log(
-      //     'CourseRemoteSource.getCourseDetail 응답 - 상태 코드: ${response.statusCode}');
-      // dev.log(
-      //     'CourseRemoteSource.getCourseDetail 응답 - 헤더: ${response.headers}');
+    if (response.isSuccess) {
+      // dev.log('CourseRemoteSource.getCourseDetail 응답 - 상태 코드: ${response.statusCode}');
       dev.log('CourseRemoteSource.getCourseDetail 응답 - 데이터: ${response.data}');
-
-      return response;
-    } catch (e, stackTrace) {
-      dev.log('CourseRemoteSource.getCourseDetail 에러 발생',
-          error: e, stackTrace: stackTrace);
-      rethrow;
+    } else {
+      dev.log('CourseRemoteSource.getCourseDetail 에러 발생 - ${response.errorMessage}',
+          error: response.errorMessage);
     }
+    return response;
   }
 }
