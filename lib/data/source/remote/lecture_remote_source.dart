@@ -1,3 +1,4 @@
+import 'dart:developer' as dev;
 import 'package:dio/dio.dart';
 
 import 'package:edu_platform_demo/core/constants/api_constants.dart';
@@ -52,15 +53,21 @@ class LectureRemoteSourceImpl implements LectureRemoteSource {
     int offset = 0,
     int count = ApiConstants.defaultPageSize,
   }) async {
-    final response = await _dio.get<Map<String, dynamic>>(
-      ApiConstants.lectureList,
-      queryParameters: {
-        ApiConstants.courseId: courseId,
-        ApiConstants.offset: offset,
-        ApiConstants.count: count,
-      },
-    );
+    dev.log('LectureRemoteSource.getLectureList 호출 - courseId: $courseId, offset: $offset, count: $count');
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(
+        ApiConstants.lectureList,
+        queryParameters: {
+          ApiConstants.courseId: courseId,
+          ApiConstants.offset: offset,
+          ApiConstants.count: count,
+        },
+      );
 
-    return response;
+      return response;
+    } catch (e, stackTrace) {
+      dev.log('LectureRemoteSource.getLectureList 에러 발생', error: e, stackTrace: stackTrace);
+      rethrow;
+    }
   }
 }
